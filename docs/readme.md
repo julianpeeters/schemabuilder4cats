@@ -31,6 +31,7 @@ val record: IO[Schema] = B.record("myrecord").fields.endRecord
 ```
 
 ##### Result:
+
 ```scala mdoc
 import cats.effect.unsafe.implicits.global
 
