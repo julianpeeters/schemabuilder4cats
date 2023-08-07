@@ -1,9 +1,10 @@
 # schemabuilder4cats
-A referentially transparent FFI to `org.apache.avro.SchemaBuilder`
+ - **Library for Scala 3.3.0 (JVM only)**
+ - **Depends on Avro 1.11.1**
 
-### Welcome to `schemabuilder4cats`
+### Installation
 
-Let's build schemas secure in the knowledge that we won't be causing side-effects.
+Build schemas secure in the knowledge that we won't be causing side-effects.
 
 ##### Add the dependency
 
@@ -13,8 +14,8 @@ Let's build schemas secure in the knowledge that we won't be causing side-effect
 
 ### Usage
 
-The `SchemaBuilder` API is modelled after `org.apache.avro.SchemaBuilder`.
-Please see the corresponding Apache Avro Java 1.11.1 API
+The `SchemaBuilder` API is modelled after Apache Avro Java 1.11.1 API.
+Please see the corresponding `org.apache.avro.SchemaBuilder`
 [Javadoc](https://avro.apache.org/docs/1.11.1/api/java/) for documentation.
 
 ##### Example:
@@ -24,7 +25,7 @@ import cats.effect.IO
 import org.apache.avro.Schema
 import schemabuilder4cats.SchemaBuilder
 
-// define B as a contextual abstraction in order to import extension methodss
+// define B as a contextual abstraction in order to import extension methods
 given B: SchemaBuilder[IO] = SchemaBuilder[IO]
 val record: IO[Schema] = B.record("myrecord").fields.endRecord
 ```

@@ -2,6 +2,7 @@ lazy val ApacheAvroV = "1.11.1"
 lazy val CatsEffectV = "3.5.1"
 lazy val MUnitCEV = "1.0.7"
 
+ThisBuild / crossScalaVersions := Seq(scalaVersion.value)
 ThisBuild / description := "A referentially transparent FFI to `org.apache.avro.SchemaBuilder`"
 ThisBuild / organization := "com.julianpeeters"
 ThisBuild / scalaVersion := "3.3.0"
@@ -37,7 +38,8 @@ lazy val docs = project.in(file("docs/gitignored"))
     mdocOut := schemabuilder4cats.base,
     mdocVariables := Map(
       "AVRO" -> ApacheAvroV,
-      "VERSION" -> version.value
+      "VERSION" -> version.value,
+      "SCALA" -> crossScalaVersions.value.mkString(", ")
     )
   )
   .dependsOn(schemabuilder4cats)
