@@ -31,3 +31,14 @@ lazy val schemabuilder4cats = (project in file("."))
       "org.typelevel" %% "munit-cats-effect-3" % MUnitCEV % Test,
     )
   )
+
+lazy val docs = project.in(file("docs/gitignored"))
+  .settings(
+    mdocOut := schemabuilder4cats.base,
+    mdocVariables := Map(
+      "AVRO" -> ApacheAvroV,
+      "VERSION" -> version.value
+    )
+  )
+  .dependsOn(schemabuilder4cats)
+  .enablePlugins(MdocPlugin)
