@@ -9,7 +9,7 @@ Build schemas secure in the knowledge that we won't be causing side-effects.
 ##### Add the dependency
 
 ```
-"com.julianpeeters" %% "schemabuilder4cats" % "0.1.0-SNAPSHOT"
+"com.julianpeeters" %% "schemabuilder4cats" % "0.0.0"
 ```
 
 ### Usage
@@ -31,6 +31,7 @@ val record: IO[Schema] = B.record("myrecord").fields.endRecord
 ```
 
 ##### Result:
+
 ```scala
 import cats.effect.unsafe.implicits.global
 
