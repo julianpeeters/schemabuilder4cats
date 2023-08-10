@@ -9,7 +9,7 @@ Build schemas secure in the knowledge that we won't be causing side-effects.
 ##### Add the dependency
 
 ```
-"com.julianpeeters" %% "schemabuilder4cats" % "0.1.0"
+"com.julianpeeters" %% "schemabuilder4cats" % "0.1.1"
 ```
 
 ### Usage

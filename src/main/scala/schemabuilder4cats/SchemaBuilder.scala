@@ -59,377 +59,401 @@ trait SchemaBuilder[F[_]]:
   def nullable: F[JBaseTypeBuilder[Schema]]
   def record(name: String): F[JRecordBuilder[Schema]]
   def unionOf: F[JBaseTypeBuilder[JUnionAccumulator[Schema]]]
-  extension (fab: F[JArrayBuilder[Schema]])
-    def items: F[JTypeBuilder[Schema]]
-    def items(itemsSchema: Schema): F[Schema]
+  extension [A] (fab: F[JArrayBuilder[A]])
+    def items: F[JTypeBuilder[A]]
+    def items(itemsSchema: Schema): F[A]
     @scala.annotation.targetName("propArrayBuilder")
-    def prop(name: String, `val`: String): F[JArrayBuilder[Schema]]
-  extension (fad: F[JArrayDefault[Schema]])
-    def arrayDefault[V](defaultVal: List[V]): F[JFieldAssembler[Schema]]
-  extension (fbftb: F[JBaseFieldTypeBuilder[Schema]])
+    def prop(name: String, `val`: String): F[JArrayBuilder[A]]
+  extension [A] (fad: F[JArrayDefault[A]])
+    def arrayDefault[V](defaultVal: List[V]): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultArrayDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (fbftb: F[JBaseFieldTypeBuilder[A]])
     @scala.annotation.targetName("arrayBuilderBaseFieldTypeBuilder")
-    def array: F[JArrayBuilder[JArrayDefault[Schema]]]
+    def array: F[JArrayBuilder[JArrayDefault[A]]]
     @scala.annotation.targetName("booleanBuilderBaseFieldTypeBuilder")
-    def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[Schema]]]
+    def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[A]]]
     @scala.annotation.targetName("booleanTypeBaseFieldTypeBuilder")
-    def booleanType: F[JBooleanDefault[Schema]]
+    def booleanType: F[JBooleanDefault[A]]
     @scala.annotation.targetName("bytesBuilderBaseFieldTypeBuilder")
-    def bytesBuilder: F[JBytesBuilder[JBytesDefault[Schema]]]
+    def bytesBuilder: F[JBytesBuilder[JBytesDefault[A]]]
     @scala.annotation.targetName("bytesTypeBaseFieldTypeBuilder")
-    def bytesType: F[JBytesDefault[Schema]]
+    def bytesType: F[JBytesDefault[A]]
     @scala.annotation.targetName("doubleBuilderBaseFieldTypeBuilder")
-    def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[Schema]]]
+    def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[A]]]
     @scala.annotation.targetName("doubleTypeBaseFieldTypeBuilder")
-    def doubleType: F[JDoubleDefault[Schema]]
+    def doubleType: F[JDoubleDefault[A]]
     @scala.annotation.targetName("enumerationBaseFieldTypeBuilder")
-    def enumeration(name: String): F[JEnumBuilder[JEnumDefault[Schema]]]
+    def enumeration(name: String): F[JEnumBuilder[JEnumDefault[A]]]
     @scala.annotation.targetName("fixedBaseFieldTypeBuilder")
-    def fixed(name: String): F[JFixedBuilder[JFixedDefault[Schema]]]
+    def fixed(name: String): F[JFixedBuilder[JFixedDefault[A]]]
     @scala.annotation.targetName("floatBuilderBaseFieldTypeBuilder")
-    def floatBuilder: F[JFloatBuilder[JFloatDefault[Schema]]]
+    def floatBuilder: F[JFloatBuilder[JFloatDefault[A]]]
     @scala.annotation.targetName("floatTypeBaseFieldTypeBuilder")
-    def floatType: F[JFloatDefault[Schema]]
+    def floatType: F[JFloatDefault[A]]
     @scala.annotation.targetName("intBuilderBaseFieldTypeBuilder")
-    def intBuilder: F[JIntBuilder[JIntDefault[Schema]]]
+    def intBuilder: F[JIntBuilder[JIntDefault[A]]]
     @scala.annotation.targetName("intTypeBaseFieldTypeBuilder")
-    def intType: F[JIntDefault[Schema]]
+    def intType: F[JIntDefault[A]]
     @scala.annotation.targetName("longBuilderBaseFieldTypeBuilder")
-    def longBuilder: F[JLongBuilder[JLongDefault[Schema]]]
+    def longBuilder: F[JLongBuilder[JLongDefault[A]]]
     @scala.annotation.targetName("longTypeBaseFieldTypeBuilder")
-    def longType: F[JLongDefault[Schema]]
+    def longType: F[JLongDefault[A]]
     @scala.annotation.targetName("mapBaseFieldTypeBuilder")
-    def map: F[JMapBuilder[JMapDefault[Schema]]]
+    def map: F[JMapBuilder[JMapDefault[A]]]
     @scala.annotation.targetName("nullBuilderBaseFieldTypeBuilder")
-    def nullBuilder: F[JNullBuilder[JNullDefault[Schema]]]
+    def nullBuilder: F[JNullBuilder[JNullDefault[A]]]
     @scala.annotation.targetName("nullTypeBaseFieldTypeBuilder")
-    def nullType: F[JNullDefault[Schema]]
+    def nullType: F[JNullDefault[A]]
     @scala.annotation.targetName("recordBaseFieldTypeBuilder")
-    def record(name: String): F[JRecordBuilder[JRecordDefault[Schema]]]
+    def record(name: String): F[JRecordBuilder[JRecordDefault[A]]]
     @scala.annotation.targetName("stringBuilderBaseFieldTypeBuilder")
-    def stringBuilder: F[JStringBuilder[JStringDefault[Schema]]]
+    def stringBuilder: F[JStringBuilder[JStringDefault[A]]]
     @scala.annotation.targetName("stringTypeBaseFieldTypeBuilder")
-    def stringType: F[JStringDefault[Schema]]
-  extension (fbtb: F[JBaseTypeBuilder[Schema]])
+    def stringType: F[JStringDefault[A]]
+  extension [A] (fbtb: F[JBaseTypeBuilder[A]])
     @scala.annotation.targetName("arrayBuilderBaseTypeBuilder")
-    def array: F[JArrayBuilder[Schema]]
+    def array: F[JArrayBuilder[A]]
     @scala.annotation.targetName("booleanBuilderBaseTypeBuilder")
-    def booleanBuilder: F[JBooleanBuilder[Schema]]
+    def booleanBuilder: F[JBooleanBuilder[A]]
     @scala.annotation.targetName("booleanTypeBaseTypeBuilder")
-    def booleanType: F[Schema]
+    def booleanType: F[A]
     @scala.annotation.targetName("bytesBuilderBaseTypeBuilder")
-    def bytesBuilder: F[JBytesBuilder[Schema]]
+    def bytesBuilder: F[JBytesBuilder[A]]
     @scala.annotation.targetName("bytesTypeBaseTypeBuilder")
-    def bytesType: F[Schema]
+    def bytesType: F[A]
     @scala.annotation.targetName("doubleBuilderBaseTypeBuilder")
-    def doubleBuilder: F[JDoubleBuilder[Schema]]
+    def doubleBuilder: F[JDoubleBuilder[A]]
     @scala.annotation.targetName("doubleTypeBaseTypeBuilder")
-    def doubleType: F[Schema]
+    def doubleType: F[A]
     @scala.annotation.targetName("enumerationBaseTypeBuilder")
-    def enumeration(name: String): F[JEnumBuilder[Schema]]
+    def enumeration(name: String): F[JEnumBuilder[A]]
     @scala.annotation.targetName("fixedBaseTypeBuilder")
-    def fixed(name: String): F[JFixedBuilder[Schema]]
+    def fixed(name: String): F[JFixedBuilder[A]]
     @scala.annotation.targetName("floatBuilderBaseTypeBuilder")
-    def floatBuilder: F[JFloatBuilder[Schema]]
+    def floatBuilder: F[JFloatBuilder[A]]
     @scala.annotation.targetName("floatTypeBaseTypeBuilder")
-    def floatType: F[Schema]
+    def floatType: F[A]
     @scala.annotation.targetName("intBuilderBaseTypeBuilder")
-    def intBuilder: F[JIntBuilder[Schema]]
+    def intBuilder: F[JIntBuilder[A]]
     @scala.annotation.targetName("intTypeBaseTypeBuilder")
-    def intType: F[Schema]
+    def intType: F[A]
     @scala.annotation.targetName("longBuilderBaseTypeBuilder")
-    def longBuilder: F[JLongBuilder[Schema]]
+    def longBuilder: F[JLongBuilder[A]]
     @scala.annotation.targetName("longTypeBaseTypeBuilder")
-    def longType: F[Schema]
+    def longType: F[A]
     @scala.annotation.targetName("mapBaseTypeBuilder")
-    def map: F[JMapBuilder[Schema]]
+    def map: F[JMapBuilder[A]]
     @scala.annotation.targetName("nullBuilderBaseTypeBuilder")
-    def nullBuilder: F[JNullBuilder[Schema]]
+    def nullBuilder: F[JNullBuilder[A]]
     @scala.annotation.targetName("nullTypeBaseTypeBuilder")
-    def nullType: F[Schema]
+    def nullType: F[A]
     @scala.annotation.targetName("recordBaseTypeBuilder")
-    def record(name: String): F[JRecordBuilder[Schema]]
+    def record(name: String): F[JRecordBuilder[A]]
     @scala.annotation.targetName("stringBuilderBaseTypeBuilder")
-    def stringBuilder: F[JStringBuilder[Schema]]
+    def stringBuilder: F[JStringBuilder[A]]
     @scala.annotation.targetName("stringTypeBaseTypeBuilder")
-    def stringType: F[Schema]
+    def stringType: F[A]
     @scala.annotation.targetName("typeSchemaBaseTypeBuilder")
-    def `type`(schema: Schema): F[Schema]
+    def `type`(schema: Schema): F[A]
     @scala.annotation.targetName("typeNameBaseTypeBuilder")
-    def `type`(name: String): F[Schema]
+    def `type`(name: String): F[A]
     @scala.annotation.targetName("typeFullNameBaseTypeBuilder")
-    def `type`(name: String, namespace: String): F[Schema]
-  extension (fbb: F[JBooleanBuilder[Schema]])
-    def endBoolean: F[Schema]
+    def `type`(name: String, namespace: String): F[A]
+  extension [A] (fbb: F[JBooleanBuilder[A]])
+    def endBoolean: F[A]
     @scala.annotation.targetName("propBooleanBuilder")
-    def prop(name: String, `val`: String): F[JBooleanBuilder[Schema]]
-  extension (fbd: F[JBooleanDefault[Schema]])
-    def booleanDefault(defaultVal: Boolean): F[JFieldAssembler[Schema]]
-  extension (fbb: F[JBytesBuilder[Schema]])
-    def endBytes: F[Schema]
+    def prop(name: String, `val`: String): F[JBooleanBuilder[A]]
+  extension [A] (fbd: F[JBooleanDefault[A]])
+    def booleanDefault(defaultVal: Boolean): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultBooleanDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (fbb: F[JBytesBuilder[A]])
+    def endBytes: F[A]
     @scala.annotation.targetName("propBytesBuilder")
-    def prop(name: String, `val`: String): F[JBytesBuilder[Schema]]
-  extension (fbd: F[JBytesDefault[Schema]])
-    def bytesDefault(defaultVal: Array[Byte]): F[JFieldAssembler[Schema]]
-    def bytesDefault(defaultVal: ByteBuffer): F[JFieldAssembler[Schema]]
-    def bytesDefault(defaultVal: String): F[JFieldAssembler[Schema]]
-  extension (fdb: F[JDoubleBuilder[Schema]])
-    def endDouble: F[Schema]
+    def prop(name: String, `val`: String): F[JBytesBuilder[A]]
+  extension [A] (fbd: F[JBytesDefault[A]])
+    def bytesDefault(defaultVal: Array[Byte]): F[JFieldAssembler[A]]
+    def bytesDefault(defaultVal: ByteBuffer): F[JFieldAssembler[A]]
+    def bytesDefault(defaultVal: String): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultBytesDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (fdb: F[JDoubleBuilder[A]])
+    def endDouble: F[A]
     @scala.annotation.targetName("propDoubleBuilder")
-    def prop(name: String, `val`: String): F[JDoubleBuilder[Schema]]
-  extension (fdd: F[JDoubleDefault[Schema]])
-    def doubleDefault(defaultVal: Double): F[JFieldAssembler[Schema]]
-  extension (feb: F[JEnumBuilder[Schema]])
+    def prop(name: String, `val`: String): F[JDoubleBuilder[A]]
+  extension [A] (fdd: F[JDoubleDefault[A]])
+    def doubleDefault(defaultVal: Double): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultDoubleDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (feb: F[JEnumBuilder[A]])
     @scala.annotation.targetName("aliasesEnumBuilder")
-    def aliases(aliases: String*): F[JEnumBuilder[Schema]]
+    def aliases(aliases: String*): F[JEnumBuilder[A]]
     @scala.annotation.targetName("docEnumBuilder")
-    def doc(doc: String): F[JEnumBuilder[Schema]]
+    def doc(doc: String): F[JEnumBuilder[A]]
     @scala.annotation.targetName("namespaceEnumBuilder")
-    def namespace(namespace: String): F[JEnumBuilder[Schema]]
+    def namespace(namespace: String): F[JEnumBuilder[A]]
     @scala.annotation.targetName("propEnumBuilder")
-    def prop(name: String, `val`: String): F[JEnumBuilder[Schema]]
-    def symbols(symbols: String*): F[Schema]
-  extension (fed: F[JEnumDefault[Schema]])
-    def enumDefault(defaultVal: String): F[JFieldAssembler[Schema]]
-  extension (ffa: F[JFieldAssembler[Schema]])
-    def endRecord: F[Schema]
-    def name(fieldName: String): F[JFieldBuilder[Schema]]
-  extension (ffb: F[JFieldBuilder[Schema]])
+    def prop(name: String, `val`: String): F[JEnumBuilder[A]]
+    def symbols(symbols: String*): F[A]
+  extension [A] (fed: F[JEnumDefault[A]])
+    def enumDefault(defaultVal: String): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultEnumDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (ffa: F[JFieldAssembler[A]])
+    def endRecord: F[A]
+    def name(fieldName: String): F[JFieldBuilder[A]]
+  extension [A] (ffb: F[JFieldBuilder[A]])
     @scala.annotation.targetName("aliasesFieldBuilder")
-    def aliases(aliases: String*): F[JFieldBuilder[Schema]]
+    def aliases(aliases: String*): F[JFieldBuilder[A]]
     @scala.annotation.targetName("docFieldBuilder")
-    def doc(doc: String): F[JFieldBuilder[Schema]]
-    def orderAscending: F[JFieldBuilder[Schema]]
-    def orderDescending: F[JFieldBuilder[Schema]]
-    def orderIgnore: F[JFieldBuilder[Schema]]
+    def doc(doc: String): F[JFieldBuilder[A]]
+    def orderAscending: F[JFieldBuilder[A]]
+    def orderDescending: F[JFieldBuilder[A]]
+    def orderIgnore: F[JFieldBuilder[A]]
     @scala.annotation.targetName("propFieldBuilder")
-    def prop(name: String, `val`: String): F[JFieldBuilder[Schema]]
+    def prop(name: String, `val`: String): F[JFieldBuilder[A]]
     @scala.annotation.targetName("typeFieldBuilder")
-    def `type`: F[JFieldTypeBuilder[Schema]]
-  extension (fftb: F[JFieldTypeBuilder[Schema]])
+    def `type`: F[JFieldTypeBuilder[A]]
+  extension [A] (fftb: F[JFieldTypeBuilder[A]])
     @scala.annotation.targetName("arrayBuilderFieldTypeBuilder")
-    def array: F[JArrayBuilder[JArrayDefault[Schema]]]
+    def array: F[JArrayBuilder[JArrayDefault[A]]]
     @scala.annotation.targetName("booleanBuilderFieldTypeBuilder")
-    def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[Schema]]]
+    def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[A]]]
     @scala.annotation.targetName("booleanTypeFieldTypeBuilder")
-    def booleanType: F[JBooleanDefault[Schema]]
+    def booleanType: F[JBooleanDefault[A]]
     @scala.annotation.targetName("bytesBuilderFieldTypeBuilder")
-    def bytesBuilder: F[JBytesBuilder[JBytesDefault[Schema]]]
+    def bytesBuilder: F[JBytesBuilder[JBytesDefault[A]]]
     @scala.annotation.targetName("bytesTypeFieldTypeBuilder")
-    def bytesType: F[JBytesDefault[Schema]]
+    def bytesType: F[JBytesDefault[A]]
     @scala.annotation.targetName("doubleBuilderFieldTypeBuilder")
-    def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[Schema]]]
+    def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[A]]]
     @scala.annotation.targetName("doubleTypeFieldTypeBuilder")
-    def doubleType: F[JDoubleDefault[Schema]]
+    def doubleType: F[JDoubleDefault[A]]
     @scala.annotation.targetName("enumerationFieldTypeBuilder")
-    def enumeration(name: String): F[JEnumBuilder[JEnumDefault[Schema]]]
+    def enumeration(name: String): F[JEnumBuilder[JEnumDefault[A]]]
     @scala.annotation.targetName("fixedFieldTypeBuilder")
-    def fixed(name: String): F[JFixedBuilder[JFixedDefault[Schema]]]
+    def fixed(name: String): F[JFixedBuilder[JFixedDefault[A]]]
     @scala.annotation.targetName("floatBuilderFieldTypeBuilder")
-    def floatBuilder: F[JFloatBuilder[JFloatDefault[Schema]]]
+    def floatBuilder: F[JFloatBuilder[JFloatDefault[A]]]
     @scala.annotation.targetName("floatTypeFieldTypeBuilder")
-    def floatType: F[JFloatDefault[Schema]]
+    def floatType: F[JFloatDefault[A]]
     @scala.annotation.targetName("intBuilderFieldTypeBuilder")
-    def intBuilder: F[JIntBuilder[JIntDefault[Schema]]]
+    def intBuilder: F[JIntBuilder[JIntDefault[A]]]
     @scala.annotation.targetName("intTypeFieldTypeBuilder")
-    def intType: F[JIntDefault[Schema]]
+    def intType: F[JIntDefault[A]]
     @scala.annotation.targetName("longBuilderFieldTypeBuilder")
-    def longBuilder: F[JLongBuilder[JLongDefault[Schema]]]
+    def longBuilder: F[JLongBuilder[JLongDefault[A]]]
     @scala.annotation.targetName("longTypeFieldTypeBuilder")
-    def longType: F[JLongDefault[Schema]]
+    def longType: F[JLongDefault[A]]
     @scala.annotation.targetName("mapFieldTypeBuilder")
-    def map: F[JMapBuilder[JMapDefault[Schema]]]
+    def map: F[JMapBuilder[JMapDefault[A]]]
     @scala.annotation.targetName("nullBuilderFieldTypeBuilder")
-    def nullBuilder: F[JNullBuilder[JNullDefault[Schema]]]
+    def nullBuilder: F[JNullBuilder[JNullDefault[A]]]
     @scala.annotation.targetName("nullTypeFieldTypeBuilder")
-    def nullType: F[JNullDefault[Schema]]
+    def nullType: F[JNullDefault[A]]
     @scala.annotation.targetName("recordFieldTypeBuilder")
-    def record(name: String): F[JRecordBuilder[JRecordDefault[Schema]]]
+    def record(name: String): F[JRecordBuilder[JRecordDefault[A]]]
     @scala.annotation.targetName("stringBuilderFieldTypeBuilder")
-    def stringBuilder: F[JStringBuilder[JStringDefault[Schema]]]
+    def stringBuilder: F[JStringBuilder[JStringDefault[A]]]
     @scala.annotation.targetName("stringTypeFieldTypeBuilder")
-    def stringType: F[JStringDefault[Schema]]
+    def stringType: F[JStringDefault[A]]
     @scala.annotation.targetName("unionOfFieldTypeBuilder")
-    def unionOf: F[JUnionFieldTypeBuilder[Schema]]
-  extension (fab: F[JFixedBuilder[Schema]])
+    def unionOf: F[JUnionFieldTypeBuilder[A]]
+  extension [A] (fab: F[JFixedBuilder[A]])
     @scala.annotation.targetName("aliasesFixedBuilder")
-    def aliases(aliases: String*): F[JFixedBuilder[Schema]]
+    def aliases(aliases: String*): F[JFixedBuilder[A]]
     @scala.annotation.targetName("docFixedBuilder")
-    def doc(doc: String): F[JFixedBuilder[Schema]]
+    def doc(doc: String): F[JFixedBuilder[A]]
     @scala.annotation.targetName("namespaceFixedBuilder")
-    def namespace(namespace: String): F[JFixedBuilder[Schema]]
+    def namespace(namespace: String): F[JFixedBuilder[A]]
     @scala.annotation.targetName("propFixedBuilder")
-    def prop(name: String, `val`: String): F[JFixedBuilder[Schema]]
-    def size(size: Int): F[Schema]
-  extension (fad: F[JFixedDefault[Schema]])
-    def fixedDefault(defaultVal: Array[Byte]): F[JFieldAssembler[Schema]]
-    def fixedDefault(defaultVal: ByteBuffer): F[JFieldAssembler[Schema]]
-    def fixedDefault(defaultVal: String): F[JFieldAssembler[Schema]]
-  extension (fgd: F[JGenericDefault[Schema]])
+    def prop(name: String, `val`: String): F[JFixedBuilder[A]]
+    def size(size: Int): F[A]
+  extension [A] (fad: F[JFixedDefault[A]])
+    def fixedDefault(defaultVal: Array[Byte]): F[JFieldAssembler[A]]
+    def fixedDefault(defaultVal: ByteBuffer): F[JFieldAssembler[A]]
+    def fixedDefault(defaultVal: String): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultFixedDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (fgd: F[JGenericDefault[A]])
     @scala.annotation.targetName("noDefaultGenericDefault")
-    def noDefault: F[JFieldAssembler[Schema]]
-    def withDefault(defaultVal: Any): F[JFieldAssembler[Schema]]
-  extension (fib: F[JIntBuilder[Schema]])
-    def endInt: F[Schema]
+    def noDefault: F[JFieldAssembler[A]]
+    def withDefault(defaultVal: Any): F[JFieldAssembler[A]]
+  extension [A] (fib: F[JIntBuilder[A]])
+    def endInt: F[A]
     @scala.annotation.targetName("propIntBuilder")
-    def prop(name: String, `val`: String): F[JIntBuilder[Schema]]
-  extension (fid: F[JIntDefault[Schema]])
-    def intDefault(defaultVal: Int): F[JFieldAssembler[Schema]]
-  extension (flb: F[JLongBuilder[Schema]])
-    def endLong: F[Schema]
+    def prop(name: String, `val`: String): F[JIntBuilder[A]]
+  extension [A] (fid: F[JIntDefault[A]])
+    def intDefault(defaultVal: Int): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultIntDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (flb: F[JLongBuilder[A]])
+    def endLong: F[A]
     @scala.annotation.targetName("propLongBuilder")
-    def prop(name: String, `val`: String): F[JLongBuilder[Schema]]
-  extension (fld: F[JLongDefault[Schema]])
-    def longDefault(defaultVal: Long): F[JFieldAssembler[Schema]]
-  extension (fmb: F[JMapBuilder[Schema]])
+    def prop(name: String, `val`: String): F[JLongBuilder[A]]
+  extension [A] (fld: F[JLongDefault[A]])
+    def longDefault(defaultVal: Long): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultLongDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (fmb: F[JMapBuilder[A]])
     @scala.annotation.targetName("propMapBuilder")
-    def prop(name: String, `val`: String): F[JMapBuilder[Schema]]
-    def values: F[JTypeBuilder[Schema]]
-    def values(valueSchema: Schema): F[Schema]
-  extension (fmd: F[JMapDefault[Schema]])
-    def mapDefault[V](defaultVal: Map[String, V]): F[JFieldAssembler[Schema]]
-  extension (fnb: F[JNullBuilder[Schema]])
-    def endNull: F[Schema]
+    def prop(name: String, `val`: String): F[JMapBuilder[A]]
+    def values: F[JTypeBuilder[A]]
+    def values(valueSchema: Schema): F[A]
+  extension [A] (fmd: F[JMapDefault[A]])
+    def mapDefault[V](defaultVal: Map[String, V]): F[JFieldAssembler[A]]
+    @scala.annotation.targetName("noDefaultMapDefault")
+    def noDefault: F[JFieldAssembler[A]]
+  extension [A] (fnb: F[JNullBuilder[A]])
+    def endNull: F[A]
     @scala.annotation.targetName("propNullBuilder")
-    def prop(name: String, `val`: String): F[JNullBuilder[Schema]]
-  extension (fnd: F[JNullDefault[Schema]])
-    def nullDefault(): F[JFieldAssembler[Schema]]
-  extension (frb: F[JRecordBuilder[Schema]])
+    def prop(name: String, `val`: String): F[JNullBuilder[A]]
+  extension [A] (fnd: F[JNullDefault[A]])
+    @scala.annotation.targetName("noDefaultNullDefault")
+    def noDefault: F[JFieldAssembler[A]]
+    def nullDefault(): F[JFieldAssembler[A]]
+  extension [A] (frb: F[JRecordBuilder[A]])
     @scala.annotation.targetName("aliasesRecordBuilder")
-    def aliases(aliases: String*): F[JRecordBuilder[Schema]]
+    def aliases(aliases: String*): F[JRecordBuilder[A]]
     @scala.annotation.targetName("docRecordBuilder")
-    def doc(doc: String): F[JRecordBuilder[Schema]]
-    def fields: F[JFieldAssembler[Schema]]
+    def doc(doc: String): F[JRecordBuilder[A]]
+    def fields: F[JFieldAssembler[A]]
     @scala.annotation.targetName("namespaceRecordBuilder")
-    def namespace(namespace: String): F[JRecordBuilder[Schema]]
+    def namespace(namespace: String): F[JRecordBuilder[A]]
     @scala.annotation.targetName("propRecordBuilder")
-    def prop(name: String, `val`: String): F[JRecordBuilder[Schema]]
-  extension (frd: F[JRecordDefault[Schema]])
-    def recordDefault(defaultVal: GenericRecord): F[JFieldAssembler[Schema]]
-  extension (fsb: F[JStringBuilder[Schema]])
-    def endString: F[Schema]
+    def prop(name: String, `val`: String): F[JRecordBuilder[A]]
+  extension [A] (frd: F[JRecordDefault[A]])
+    @scala.annotation.targetName("noDefaultRecordDefault")
+    def noDefault: F[JFieldAssembler[A]]
+    def recordDefault(defaultVal: GenericRecord): F[JFieldAssembler[A]]
+  extension [A] (fsb: F[JStringBuilder[A]])
+    def endString: F[A]
     @scala.annotation.targetName("propStringBuilder")
-    def prop(name: String, `val`: String): F[JStringBuilder[Schema]]
-  extension (fsd: F[JStringDefault[Schema]])
-    def stringDefault(defaultVal: String): F[JFieldAssembler[Schema]]
-  extension (ftb: F[JTypeBuilder[Schema]])
+    def prop(name: String, `val`: String): F[JStringBuilder[A]]
+  extension [A] (fsd: F[JStringDefault[A]])
+    @scala.annotation.targetName("noDefaultStringDefault")
+    def noDefault: F[JFieldAssembler[A]]
+    def stringDefault(defaultVal: String): F[JFieldAssembler[A]]
+  extension [A] (ftb: F[JTypeBuilder[A]])
     @scala.annotation.targetName("arrayBuilderTypeBuilder")
-    def array: F[JArrayBuilder[Schema]]
+    def array: F[JArrayBuilder[A]]
     @scala.annotation.targetName("booleanBuilderTypeBuilder")
-    def booleanBuilder: F[JBooleanBuilder[Schema]]
+    def booleanBuilder: F[JBooleanBuilder[A]]
     @scala.annotation.targetName("booleanTypeTypeBuilder")
-    def booleanType: F[Schema]
+    def booleanType: F[A]
     @scala.annotation.targetName("bytesBuilderTypeBuilder")
-    def bytesBuilder: F[JBytesBuilder[Schema]]
+    def bytesBuilder: F[JBytesBuilder[A]]
     @scala.annotation.targetName("bytesTypeTypeBuilder")
-    def bytesType: F[Schema]
+    def bytesType: F[A]
     @scala.annotation.targetName("doubleBuilderTypeBuilder")
-    def doubleBuilder: F[JDoubleBuilder[Schema]]
+    def doubleBuilder: F[JDoubleBuilder[A]]
     @scala.annotation.targetName("doubleTypeTypeBuilder")
-    def doubleType: F[Schema]
+    def doubleType: F[A]
     @scala.annotation.targetName("enumerationTypeBuilder")
-    def enumeration(name: String): F[JEnumBuilder[Schema]]
+    def enumeration(name: String): F[JEnumBuilder[A]]
     @scala.annotation.targetName("fixedTypeBuilder")
-    def fixed(name: String): F[JFixedBuilder[Schema]]
+    def fixed(name: String): F[JFixedBuilder[A]]
     @scala.annotation.targetName("floatBuilderTypeBuilder")
-    def floatBuilder: F[JFloatBuilder[Schema]]
+    def floatBuilder: F[JFloatBuilder[A]]
     @scala.annotation.targetName("floatTypeTypeBuilder")
-    def floatType: F[Schema]
+    def floatType: F[A]
     @scala.annotation.targetName("intBuilderTypeBuilder")
-    def intBuilder: F[JIntBuilder[Schema]]
+    def intBuilder: F[JIntBuilder[A]]
     @scala.annotation.targetName("intTypeTypeBuilder")
-    def intType: F[Schema]
+    def intType: F[A]
     @scala.annotation.targetName("longBuilderTypeBuilder")
-    def longBuilder: F[JLongBuilder[Schema]]
+    def longBuilder: F[JLongBuilder[A]]
     @scala.annotation.targetName("longTypeTypeBuilder")
-    def longType: F[Schema]
+    def longType: F[A]
     @scala.annotation.targetName("mapTypeBuilder")
-    def map: F[JMapBuilder[Schema]]
+    def map: F[JMapBuilder[A]]
     @scala.annotation.targetName("nullBuilderTypeBuilder")
-    def nullBuilder: F[JNullBuilder[Schema]]
+    def nullBuilder: F[JNullBuilder[A]]
     @scala.annotation.targetName("nullTypeTypeBuilder")
-    def nullType: F[Schema]
+    def nullType: F[A]
     @scala.annotation.targetName("recordTypeBuilder")
-    def record(name: String): F[JRecordBuilder[Schema]]
+    def record(name: String): F[JRecordBuilder[A]]
     @scala.annotation.targetName("stringBuilderTypeBuilder")
-    def stringBuilder: F[JStringBuilder[Schema]]
+    def stringBuilder: F[JStringBuilder[A]]
     @scala.annotation.targetName("stringTypeTypeBuilder")
-    def stringType: F[Schema]
+    def stringType: F[A]
     @scala.annotation.targetName("typeSchemaTypeBuilder")
-    def `type`(schema: Schema): F[Schema]
+    def `type`(schema: Schema): F[A]
     @scala.annotation.targetName("typeNameTypeBuilder")
-    def `type`(name: String): F[Schema]
+    def `type`(name: String): F[A]
     @scala.annotation.targetName("typeFullNameTypeBuilder")
-    def `type`(name: String, namespace: String): F[Schema]
+    def `type`(name: String, namespace: String): F[A]
     @scala.annotation.targetName("unionOfTypeBuilder")
-    def unionOf: F[JBaseTypeBuilder[JUnionAccumulator[Schema]]]
-  extension (fua: F[JUnionAccumulator[Schema]])
-    def and: F[JBaseTypeBuilder[JUnionAccumulator[Schema]]]
-    def endUnion: F[Schema]
-  extension (fuftb: F[JUnionFieldTypeBuilder[Schema]])
-    def array: F[JArrayBuilder[JUnionAccumulator[JArrayDefault[Schema]]]]
-    def booleanBuilder: F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[Schema]]]]
-    def booleanType: F[JUnionAccumulator[JBooleanDefault[Schema]]]
-    def bytesBuilder: F[JBytesBuilder[JUnionAccumulator[JBytesDefault[Schema]]]]
-    def bytesType: F[JUnionAccumulator[JBytesDefault[Schema]]]
-    def doubleBuilder: F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[Schema]]]]
-    def doubleType: F[JUnionAccumulator[JDoubleDefault[Schema]]]
-    def enumeration(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[Schema]]]]
-    def fixed(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[Schema]]]]
-    def floatBuilder: F[JFloatBuilder[JUnionAccumulator[JFloatDefault[Schema]]]]
-    def floatType: F[JUnionAccumulator[JFloatDefault[Schema]]]
-    def intBuilder: F[JIntBuilder[JUnionAccumulator[JIntDefault[Schema]]]]
-    def intType: F[JUnionAccumulator[JIntDefault[Schema]]]
-    def longBuilder: F[JLongBuilder[JUnionAccumulator[JLongDefault[Schema]]]]
-    def longType: F[JUnionAccumulator[JLongDefault[Schema]]]
-    def map: F[JMapBuilder[JUnionAccumulator[JMapDefault[Schema]]]]
-    def nullBuilder: F[JNullBuilder[JUnionAccumulator[JNullDefault[Schema]]]]
-    def nullType: F[JUnionAccumulator[JNullDefault[Schema]]]
-    def record(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[Schema]]]]
-    def stringBuilder: F[JStringBuilder[JUnionAccumulator[JStringDefault[Schema]]]]
-    def stringType: F[JUnionAccumulator[JStringDefault[Schema]]]
+    def unionOf: F[JBaseTypeBuilder[JUnionAccumulator[A]]]
+  extension [A] (fua: F[JUnionAccumulator[A]])
+    def and: F[JBaseTypeBuilder[JUnionAccumulator[A]]]
+    def endUnion: F[A]
+  extension [A] (fuftb: F[JUnionFieldTypeBuilder[A]])
+    def array: F[JArrayBuilder[JUnionAccumulator[JArrayDefault[A]]]]
+    def booleanBuilder: F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[A]]]]
+    def booleanType: F[JUnionAccumulator[JBooleanDefault[A]]]
+    def bytesBuilder: F[JBytesBuilder[JUnionAccumulator[JBytesDefault[A]]]]
+    def bytesType: F[JUnionAccumulator[JBytesDefault[A]]]
+    def doubleBuilder: F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[A]]]]
+    def doubleType: F[JUnionAccumulator[JDoubleDefault[A]]]
+    def enumeration(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[A]]]]
+    def fixed(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[A]]]]
+    def floatBuilder: F[JFloatBuilder[JUnionAccumulator[JFloatDefault[A]]]]
+    def floatType: F[JUnionAccumulator[JFloatDefault[A]]]
+    def intBuilder: F[JIntBuilder[JUnionAccumulator[JIntDefault[A]]]]
+    def intType: F[JUnionAccumulator[JIntDefault[A]]]
+    def longBuilder: F[JLongBuilder[JUnionAccumulator[JLongDefault[A]]]]
+    def longType: F[JUnionAccumulator[JLongDefault[A]]]
+    def map: F[JMapBuilder[JUnionAccumulator[JMapDefault[A]]]]
+    def nullBuilder: F[JNullBuilder[JUnionAccumulator[JNullDefault[A]]]]
+    def nullType: F[JUnionAccumulator[JNullDefault[A]]]
+    def record(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[A]]]]
+    def stringBuilder: F[JStringBuilder[JUnionAccumulator[JStringDefault[A]]]]
+    def stringType: F[JUnionAccumulator[JStringDefault[A]]]
 
 
 object SchemaBuilder:
 
   given apply[F[_]: Sync](
     using
-      AB: SchemaBuilder.ArrayBuilder[F, Schema],
-      AD: SchemaBuilder.ArrayDefault[F, Schema],
-      BAF: SchemaBuilder.BaseFieldTypeBuilder[F, Schema],
-      BAT: SchemaBuilder.BaseTypeBuilder[F, Schema],
-      BOB: SchemaBuilder.BooleanBuilder[F, Schema],
-      BOD: SchemaBuilder.BooleanDefault[F, Schema],
-      BYB: SchemaBuilder.BytesBuilder[F, Schema],
-      BYD: SchemaBuilder.BytesDefault[F, Schema],
-      DB: SchemaBuilder.DoubleBuilder[F, Schema],
-      DD: SchemaBuilder.DoubleDefault[F, Schema],
-      EB: SchemaBuilder.EnumBuilder[F, Schema],
-      ED: SchemaBuilder.EnumDefault[F, Schema],
-      FA: SchemaBuilder.FieldAssembler[F, Schema],
-      FB: SchemaBuilder.FieldBuilder[F, Schema],
-      FD: SchemaBuilder.FieldDefault[F, Schema],
-      FXB: SchemaBuilder.FixedBuilder[F, Schema],
-      FXD: SchemaBuilder.FixedDefault[F, Schema],
-      FTB: SchemaBuilder.FieldTypeBuilder[F, Schema],
-      GD: SchemaBuilder.GenericDefault[F, Schema],
-      IB: SchemaBuilder.IntBuilder[F, Schema],
-      ID: SchemaBuilder.IntDefault[F, Schema],
-      LB: SchemaBuilder.LongBuilder[F, Schema],
-      LD: SchemaBuilder.LongDefault[F, Schema],
-      MB: SchemaBuilder.MapBuilder[F, Schema],
-      MD: SchemaBuilder.MapDefault[F, Schema],
-      NMB: SchemaBuilder.NamedBuilder[F, Schema],
-      NSB: SchemaBuilder.NamespacedBuilder[F, Schema],
-      NB: SchemaBuilder.NullBuilder[F, Schema],
-      ND: SchemaBuilder.NullDefault[F, Schema],
-      PB: SchemaBuilder.PropBuilder[F, Schema],
-      RB: SchemaBuilder.RecordBuilder[F, Schema],
-      RD: SchemaBuilder.RecordDefault[F, Schema],
-      SB: SchemaBuilder.StringBuilder[F, Schema],
-      SD: SchemaBuilder.StringDefault[F, Schema],
-      TB: SchemaBuilder.TypeBuilder[F, Schema],
-      UA: SchemaBuilder.UnionAccumulator[F, Schema],
-      UFTB: SchemaBuilder.UnionFieldTypeBuilder[F, Schema],
+      AB: SchemaBuilder.ArrayBuilder[F],
+      AD: SchemaBuilder.ArrayDefault[F],
+      BAF: SchemaBuilder.BaseFieldTypeBuilder[F],
+      BAT: SchemaBuilder.BaseTypeBuilder[F],
+      BOB: SchemaBuilder.BooleanBuilder[F],
+      BOD: SchemaBuilder.BooleanDefault[F],
+      BYB: SchemaBuilder.BytesBuilder[F],
+      BYD: SchemaBuilder.BytesDefault[F],
+      DB: SchemaBuilder.DoubleBuilder[F],
+      DD: SchemaBuilder.DoubleDefault[F],
+      EB: SchemaBuilder.EnumBuilder[F],
+      ED: SchemaBuilder.EnumDefault[F],
+      FA: SchemaBuilder.FieldAssembler[F],
+      FB: SchemaBuilder.FieldBuilder[F],
+      FD: SchemaBuilder.FieldDefault[F],
+      FXB: SchemaBuilder.FixedBuilder[F],
+      FXD: SchemaBuilder.FixedDefault[F],
+      FTB: SchemaBuilder.FieldTypeBuilder[F],
+      GD: SchemaBuilder.GenericDefault[F],
+      IB: SchemaBuilder.IntBuilder[F],
+      ID: SchemaBuilder.IntDefault[F],
+      LB: SchemaBuilder.LongBuilder[F],
+      LD: SchemaBuilder.LongDefault[F],
+      MB: SchemaBuilder.MapBuilder[F],
+      MD: SchemaBuilder.MapDefault[F],
+      NMB: SchemaBuilder.NamedBuilder[F],
+      NSB: SchemaBuilder.NamespacedBuilder[F],
+      NB: SchemaBuilder.NullBuilder[F],
+      ND: SchemaBuilder.NullDefault[F],
+      PB: SchemaBuilder.PropBuilder[F],
+      RB: SchemaBuilder.RecordBuilder[F],
+      RD: SchemaBuilder.RecordDefault[F],
+      SB: SchemaBuilder.StringBuilder[F],
+      SD: SchemaBuilder.StringDefault[F],
+      TB: SchemaBuilder.TypeBuilder[F],
+      UA: SchemaBuilder.UnionAccumulator[F],
+      UFTB: SchemaBuilder.UnionFieldTypeBuilder[F],
   ): SchemaBuilder[F] =
     new SchemaBuilder[F]:
 
@@ -452,1208 +476,1244 @@ object SchemaBuilder:
       def unionOf: F[JBaseTypeBuilder[JUnionAccumulator[Schema]]] =
         Sync[F].delay(org.apache.avro.SchemaBuilder.unionOf())
 
-      extension (fab: F[JArrayBuilder[Schema]])
-        def items: F[JTypeBuilder[Schema]] =
+      extension [A] (fab: F[JArrayBuilder[A]])
+        def items: F[JTypeBuilder[A]] =
           fab.flatMap(ab => AB.items(ab))
-        def items(itemsSchema: Schema): F[Schema] =
+        def items(itemsSchema: Schema): F[A] =
           fab.flatMap(ab => AB.items(ab)(itemsSchema))
         @scala.annotation.targetName("propArrayBuilder")
-        def prop(name: String, `val`: String): F[JArrayBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JArrayBuilder[A]] =
           fab.flatMap(ab => PB.prop(ab)(name, `val`))
 
-      extension (fad: F[JArrayDefault[Schema]])
-        def arrayDefault[V](defaultVal: List[V]): F[JFieldAssembler[Schema]] =
+      extension [A] (fad: F[JArrayDefault[A]])
+        def arrayDefault[V](defaultVal: List[V]): F[JFieldAssembler[A]] =
           fad.flatMap(ad => AD.arrayDefault(ad)(defaultVal))
+        @scala.annotation.targetName("noDefaultArrayDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fad.flatMap(ad => FD.noDefault(ad))
 
-      extension (fbftb: F[JBaseFieldTypeBuilder[Schema]])
+      extension [A] (fbftb: F[JBaseFieldTypeBuilder[A]])
         @scala.annotation.targetName("arrayBuilderBaseFieldTypeBuilder")
-        def array: F[JArrayBuilder[JArrayDefault[Schema]]] =
+        def array: F[JArrayBuilder[JArrayDefault[A]]] =
           fbftb.flatMap(ftb => BAF.array(ftb))
         @scala.annotation.targetName("booleanBuilderBaseFieldTypeBuilder")
-        def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[Schema]]] =
+        def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[A]]] =
           fbftb.flatMap(ftb => BAF.booleanBuilder(ftb))
         @scala.annotation.targetName("booleanTypeBaseFieldTypeBuilder")
-        def booleanType: F[JBooleanDefault[Schema]] =
+        def booleanType: F[JBooleanDefault[A]] =
           fbftb.flatMap(ftb => BAF.booleanType(ftb))
         @scala.annotation.targetName("bytesBuilderBaseFieldTypeBuilder")
-        def bytesBuilder: F[JBytesBuilder[JBytesDefault[Schema]]] =
+        def bytesBuilder: F[JBytesBuilder[JBytesDefault[A]]] =
           fbftb.flatMap(ftb => BAF.bytesBuilder(ftb))
         @scala.annotation.targetName("bytesTypeBaseFieldTypeBuilder")
-        def bytesType: F[JBytesDefault[Schema]] =
+        def bytesType: F[JBytesDefault[A]] =
           fbftb.flatMap(ftb => BAF.bytesType(ftb))
         @scala.annotation.targetName("doubleBuilderBaseFieldTypeBuilder")
-        def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[Schema]]] =
+        def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[A]]] =
           fbftb.flatMap(ftb => BAF.doubleBuilder(ftb))
         @scala.annotation.targetName("doubleTypeBaseFieldTypeBuilder")
-        def doubleType: F[JDoubleDefault[Schema]] =
+        def doubleType: F[JDoubleDefault[A]] =
           fbftb.flatMap(ftb => BAF.doubleType(ftb))
         @scala.annotation.targetName("enumerationBaseFieldTypeBuilder")
-        def enumeration(name: String): F[JEnumBuilder[JEnumDefault[Schema]]] =
+        def enumeration(name: String): F[JEnumBuilder[JEnumDefault[A]]] =
           fbftb.flatMap(ftb => BAF.enumeration(ftb)(name))
         @scala.annotation.targetName("fixedBaseFieldTypeBuilder")
-        def fixed(name: String): F[JFixedBuilder[JFixedDefault[Schema]]] =
+        def fixed(name: String): F[JFixedBuilder[JFixedDefault[A]]] =
           fbftb.flatMap(ftb => BAF.fixed(ftb)(name))
         @scala.annotation.targetName("floatBuilderBaseFieldTypeBuilder")
-        def floatBuilder: F[JFloatBuilder[JFloatDefault[Schema]]] =
+        def floatBuilder: F[JFloatBuilder[JFloatDefault[A]]] =
           fbftb.flatMap(ftb => BAF.floatBuilder(ftb))
         @scala.annotation.targetName("floatTypeBaseFieldTypeBuilder")
-        def floatType: F[JFloatDefault[Schema]] =
+        def floatType: F[JFloatDefault[A]] =
           fbftb.flatMap(ftb => BAF.floatType(ftb))
         @scala.annotation.targetName("intBuilderBaseFieldTypeBuilder")
-        def intBuilder: F[JIntBuilder[JIntDefault[Schema]]] =
+        def intBuilder: F[JIntBuilder[JIntDefault[A]]] =
           fbftb.flatMap(ftb => BAF.intBuilder(ftb))
         @scala.annotation.targetName("intTypeBaseFieldTypeBuilder")
-        def intType: F[JIntDefault[Schema]] =
+        def intType: F[JIntDefault[A]] =
           fbftb.flatMap(ftb => BAF.intType(ftb))
         @scala.annotation.targetName("longBuilderBaseFieldTypeBuilder")
-        def longBuilder: F[JLongBuilder[JLongDefault[Schema]]] =
+        def longBuilder: F[JLongBuilder[JLongDefault[A]]] =
           fbftb.flatMap(ftb => BAF.longBuilder(ftb))
         @scala.annotation.targetName("longTypeBaseFieldTypeBuilder")
-        def longType: F[JLongDefault[Schema]] =
+        def longType: F[JLongDefault[A]] =
           fbftb.flatMap(ftb => BAF.longType(ftb))
         @scala.annotation.targetName("mapBaseFieldTypeBuilder")
-        def map: F[JMapBuilder[JMapDefault[Schema]]] =
+        def map: F[JMapBuilder[JMapDefault[A]]] =
           fbftb.flatMap(ftb => BAF.map(ftb))
         @scala.annotation.targetName("nullBuilderBaseFieldTypeBuilder")
-        def nullBuilder: F[JNullBuilder[JNullDefault[Schema]]] =
+        def nullBuilder: F[JNullBuilder[JNullDefault[A]]] =
           fbftb.flatMap(ftb => BAF.nullBuilder(ftb))
         @scala.annotation.targetName("nullTypeBaseFieldTypeBuilder")
-        def nullType: F[JNullDefault[Schema]] =
+        def nullType: F[JNullDefault[A]] =
           fbftb.flatMap(ftb => BAF.nullType(ftb))
         @scala.annotation.targetName("recordBaseFieldTypeBuilder")
-        def record(name: String): F[JRecordBuilder[JRecordDefault[Schema]]] =
+        def record(name: String): F[JRecordBuilder[JRecordDefault[A]]] =
           fbftb.flatMap(ftb => BAF.record(ftb)(name))
         @scala.annotation.targetName("stringBuilderBaseFieldTypeBuilder")
-        def stringBuilder: F[JStringBuilder[JStringDefault[Schema]]] =
+        def stringBuilder: F[JStringBuilder[JStringDefault[A]]] =
           fbftb.flatMap(ftb => BAF.stringBuilder(ftb))
         @scala.annotation.targetName("stringTypeBaseFieldTypeBuilder")
-        def stringType: F[JStringDefault[Schema]] =
+        def stringType: F[JStringDefault[A]] =
           fbftb.flatMap(ftb => BAF.stringType(ftb))
 
-      extension (fbtb: F[JBaseTypeBuilder[Schema]])
+      extension [A] (fbtb: F[JBaseTypeBuilder[A]])
         @scala.annotation.targetName("arrayBuilderBaseTypeBuilder")
-        def array: F[JArrayBuilder[Schema]] =
+        def array: F[JArrayBuilder[A]] =
           fbtb.flatMap(btb => BAT.array(btb))
         @scala.annotation.targetName("booleanBuilderBaseTypeBuilder")
-        def booleanBuilder: F[JBooleanBuilder[Schema]] =
+        def booleanBuilder: F[JBooleanBuilder[A]] =
           fbtb.flatMap(btb => BAT.booleanBuilder(btb))
         @scala.annotation.targetName("booleanTypeBaseTypeBuilder")
-        def booleanType: F[Schema] =
+        def booleanType: F[A] =
           fbtb.flatMap(btb => BAT.booleanType(btb))
         @scala.annotation.targetName("bytesBuilderBaseTypeBuilder")
-        def bytesBuilder: F[JBytesBuilder[Schema]] =
+        def bytesBuilder: F[JBytesBuilder[A]] =
           fbtb.flatMap(btb => BAT.bytesBuilder(btb))
         @scala.annotation.targetName("bytesTypeBaseTypeBuilder")
-        def bytesType: F[Schema] =
+        def bytesType: F[A] =
           fbtb.flatMap(btb => BAT.bytesType(btb))
         @scala.annotation.targetName("doubleBuilderBaseTypeBuilder")
-        def doubleBuilder: F[JDoubleBuilder[Schema]] =
+        def doubleBuilder: F[JDoubleBuilder[A]] =
           fbtb.flatMap(btb => BAT.doubleBuilder(btb))
         @scala.annotation.targetName("doubleTypeBaseTypeBuilder")
-        def doubleType: F[Schema] =
+        def doubleType: F[A] =
           fbtb.flatMap(btb => BAT.doubleType(btb))
         @scala.annotation.targetName("enumerationBaseTypeBuilder")
-        def enumeration(name: String): F[JEnumBuilder[Schema]] =
+        def enumeration(name: String): F[JEnumBuilder[A]] =
           fbtb.flatMap(btb => BAT.enumeration(btb)(name))
         @scala.annotation.targetName("fixedBaseTypeBuilder")
-        def fixed(name: String): F[JFixedBuilder[Schema]] =
+        def fixed(name: String): F[JFixedBuilder[A]] =
           fbtb.flatMap(btb => BAT.fixed(btb)(name))
         @scala.annotation.targetName("floatBuilderBaseTypeBuilder")
-        def floatBuilder: F[JFloatBuilder[Schema]] =
+        def floatBuilder: F[JFloatBuilder[A]] =
           fbtb.flatMap(btb => BAT.floatBuilder(btb))
         @scala.annotation.targetName("floatTypeBaseTypeBuilder")
-        def floatType: F[Schema] =
+        def floatType: F[A] =
           fbtb.flatMap(btb => BAT.floatType(btb))
         @scala.annotation.targetName("intBuilderBaseTypeBuilder")
-        def intBuilder: F[JIntBuilder[Schema]] =
+        def intBuilder: F[JIntBuilder[A]] =
           fbtb.flatMap(btb => BAT.intBuilder(btb))
         @scala.annotation.targetName("intTypeBaseTypeBuilder")
-        def intType: F[Schema] =
+        def intType: F[A] =
           fbtb.flatMap(btb => BAT.intType(btb))
         @scala.annotation.targetName("longBuilderBaseTypeBuilder")
-        def longBuilder: F[JLongBuilder[Schema]] =
+        def longBuilder: F[JLongBuilder[A]] =
           fbtb.flatMap(btb => BAT.longBuilder(btb))
         @scala.annotation.targetName("longTypeBaseTypeBuilder")
-        def longType: F[Schema] =
+        def longType: F[A] =
           fbtb.flatMap(btb => BAT.longType(btb))
         @scala.annotation.targetName("mapBaseTypeBuilder")
-        def map: F[JMapBuilder[Schema]] =
+        def map: F[JMapBuilder[A]] =
           fbtb.flatMap(btb => BAT.map(btb))
         @scala.annotation.targetName("nullBuilderBaseTypeBuilder")
-        def nullBuilder: F[JNullBuilder[Schema]] =
+        def nullBuilder: F[JNullBuilder[A]] =
           fbtb.flatMap(btb => BAT.nullBuilder(btb))
         @scala.annotation.targetName("nullTypeBaseTypeBuilder")
-        def nullType: F[Schema] =
+        def nullType: F[A] =
           fbtb.flatMap(btb => BAT.nullType(btb))
         @scala.annotation.targetName("recordBaseTypeBuilder")
-        def record(name: String): F[JRecordBuilder[Schema]] =
+        def record(name: String): F[JRecordBuilder[A]] =
           fbtb.flatMap(btb => BAT.record(btb)(name))
         @scala.annotation.targetName("stringBuilderBaseTypeBuilder")
-        def stringBuilder: F[JStringBuilder[Schema]] =
+        def stringBuilder: F[JStringBuilder[A]] =
           fbtb.flatMap(btb => BAT.stringBuilder(btb))
         @scala.annotation.targetName("stringTypeBaseTypeBuilder")
-        def stringType: F[Schema] =
+        def stringType: F[A] =
           fbtb.flatMap(btb => BAT.stringType(btb))
         @scala.annotation.targetName("typeSchemaBaseTypeBuilder")
-        def `type`(schema: Schema): F[Schema] =
+        def `type`(schema: Schema): F[A] =
           fbtb.flatMap(btb => BAT.`type`(btb)(schema))
         @scala.annotation.targetName("typeNameBaseTypeBuilder")
-        def `type`(name: String): F[Schema] =
+        def `type`(name: String): F[A] =
           fbtb.flatMap(btb => BAT.`type`(btb)(name))
         @scala.annotation.targetName("typeFullNameBaseTypeBuilder")
-        def `type`(name: String, namespace: String): F[Schema] =
+        def `type`(name: String, namespace: String): F[A] =
           fbtb.flatMap(btb => BAT.`type`(btb)(name, namespace))
 
-      extension (fbb: F[JBooleanBuilder[Schema]])
-        def endBoolean: F[Schema] =
+      extension [A] (fbb: F[JBooleanBuilder[A]])
+        def endBoolean: F[A] =
           fbb.flatMap(bb => BOB.endBoolean(bb))
         @scala.annotation.targetName("propBooleanBuilder")
-        def prop(name: String, `val`: String): F[JBooleanBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JBooleanBuilder[A]] =
           fbb.flatMap(ab => PB.prop(ab)(name, `val`))
 
-      extension (fbd: F[JBooleanDefault[Schema]])
-        def booleanDefault(defaultVal: Boolean): F[JFieldAssembler[Schema]] =
+      extension [A] (fbd: F[JBooleanDefault[A]])
+        def booleanDefault(defaultVal: Boolean): F[JFieldAssembler[A]] =
           fbd.flatMap(bd => BOD.booleanDefault(bd)(defaultVal))
+        @scala.annotation.targetName("noDefaultBooleanDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fbd.flatMap(bd => FD.noDefault(bd))
 
-      extension (fabb: F[JBytesBuilder[Schema]])
-        def endBytes: F[Schema] =
+      extension [A] (fabb: F[JBytesBuilder[A]])
+        def endBytes: F[A] =
           fabb.flatMap(abb => BYB.endBytes(abb))
         @scala.annotation.targetName("propBytesBuilder")
-        def prop(name: String, `val`: String): F[JBytesBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JBytesBuilder[A]] =
           fabb.flatMap(abb => PB.prop(abb)(name, `val`))
 
-      extension (fbd: F[JBytesDefault[Schema]])
-        def bytesDefault(defaultVal: Array[Byte]): F[JFieldAssembler[Schema]] =
+      extension [A] (fbd: F[JBytesDefault[A]])
+        def bytesDefault(defaultVal: Array[Byte]): F[JFieldAssembler[A]] =
           fbd.flatMap(bd => BYD.bytesDefault(bd)(defaultVal))
-        def bytesDefault(defaultVal: ByteBuffer): F[JFieldAssembler[Schema]] =
+        def bytesDefault(defaultVal: ByteBuffer): F[JFieldAssembler[A]] =
           fbd.flatMap(bd => BYD.bytesDefault(bd)(defaultVal))
-        def bytesDefault(defaultVal: String): F[JFieldAssembler[Schema]] =
+        def bytesDefault(defaultVal: String): F[JFieldAssembler[A]] =
           fbd.flatMap(bd => BYD.bytesDefault(bd)(defaultVal))
+        @scala.annotation.targetName("noDefaultBytesDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fbd.flatMap(bd => FD.noDefault(bd))
 
-      extension (fdb: F[JDoubleBuilder[Schema]])
-        def endDouble: F[Schema] =
+      extension [A] (fdb: F[JDoubleBuilder[A]])
+        def endDouble: F[A] =
           fdb.flatMap(db => DB.endDouble(db))
         @scala.annotation.targetName("propDoubleBuilder")
-        def prop(name: String, `val`: String): F[JDoubleBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JDoubleBuilder[A]] =
           fdb.flatMap(db => PB.prop(db)(name, `val`))
 
-      extension (fdd: F[JDoubleDefault[Schema]])
-        def doubleDefault(defaultVal: Double): F[JFieldAssembler[Schema]] =
+      extension [A] (fdd: F[JDoubleDefault[A]])
+        def doubleDefault(defaultVal: Double): F[JFieldAssembler[A]] =
           fdd.flatMap(dd => DD.doubleDefault(dd)(defaultVal))
+        @scala.annotation.targetName("noDefaultDoubleDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fdd.flatMap(dd => FD.noDefault(dd))
 
-      extension (feb: F[JEnumBuilder[Schema]])
+      extension [A] (feb: F[JEnumBuilder[A]])
         @scala.annotation.targetName("aliasesEnumBuilder")
-        def aliases(aliases: String*): F[JEnumBuilder[Schema]] =
+        def aliases(aliases: String*): F[JEnumBuilder[A]] =
           feb.flatMap(eb => NMB.aliases(eb)(aliases*))
         @scala.annotation.targetName("docEnumBuilder")
-        def doc(doc: String): F[JEnumBuilder[Schema]] =
+        def doc(doc: String): F[JEnumBuilder[A]] =
           feb.flatMap(eb => NMB.doc(eb)(doc))
         @scala.annotation.targetName("namespaceEnumBuilder")
-        def namespace(namespace: String): F[JEnumBuilder[Schema]] =
+        def namespace(namespace: String): F[JEnumBuilder[A]] =
           feb.flatMap(eb => NSB.namespace(eb)(namespace))
         @scala.annotation.targetName("propEnumBuilder")
-        def prop(name: String, `val`: String): F[JEnumBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JEnumBuilder[A]] =
           feb.flatMap(eb => PB.prop(eb)(name, `val`))
-        def symbols(symbols: String*): F[Schema] =
+        def symbols(symbols: String*): F[A] =
           feb.flatMap(eb => EB.symbols(eb)(symbols*))
 
-      extension (fed: F[JEnumDefault[Schema]])
-        def enumDefault(defaultVal: String): F[JFieldAssembler[Schema]] =
+      extension [A] (fed: F[JEnumDefault[A]])
+        def enumDefault(defaultVal: String): F[JFieldAssembler[A]] =
           fed.flatMap(ed => ED.enumDefault(ed)(defaultVal))
+        @scala.annotation.targetName("noDefaultEnumDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fed.flatMap(ed => FD.noDefault(ed))
 
-      extension (ffa: F[JFieldAssembler[Schema]])
-        def endRecord: F[Schema] =
+      extension [A] (ffa: F[JFieldAssembler[A]])
+        def endRecord: F[A] =
           ffa.flatMap(fa => FA.endRecord(fa))
-        def name(fieldName: String): F[JFieldBuilder[Schema]] =
+        def name(fieldName: String): F[JFieldBuilder[A]] =
           ffa.flatMap(fa => FA.name(fa)(fieldName))
     
-      extension (ffb: F[JFieldBuilder[Schema]])
+      extension [A] (ffb: F[JFieldBuilder[A]])
         @scala.annotation.targetName("aliasesFieldBuilder")
-        def aliases(aliases: String*): F[JFieldBuilder[Schema]] =
+        def aliases(aliases: String*): F[JFieldBuilder[A]] =
           ffb.flatMap(fb => NMB.aliases(fb)(aliases*))
         @scala.annotation.targetName("docFieldBuilder")
-        def doc(doc: String): F[JFieldBuilder[Schema]] =
+        def doc(doc: String): F[JFieldBuilder[A]] =
           ffb.flatMap(fb => NMB.doc(fb)(doc))
-        def orderAscending: F[JFieldBuilder[Schema]] =
+        def orderAscending: F[JFieldBuilder[A]] =
           ffb.flatMap(fb => FB.orderAscending(fb))
-        def orderDescending: F[JFieldBuilder[Schema]] =
+        def orderDescending: F[JFieldBuilder[A]] =
           ffb.flatMap(fb => FB.orderAscending(fb))
-        def orderIgnore: F[JFieldBuilder[Schema]] =
+        def orderIgnore: F[JFieldBuilder[A]] =
           ffb.flatMap(fb => FB.orderAscending(fb))
         @scala.annotation.targetName("propFieldBuilder")
-        def prop(name: String, `val`: String): F[JFieldBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JFieldBuilder[A]] =
           ffb.flatMap(fb => PB.prop(fb)(name, `val`))
         @scala.annotation.targetName("typeFieldBuilder")
-        def `type`: F[JFieldTypeBuilder[Schema]] =
+        def `type`: F[JFieldTypeBuilder[A]] =
           ffb.flatMap(fb => FB.`type`(fb))
 
-      extension [U <: JFieldDefault[Schema, U]] (ffd: F[JFieldDefault[Schema, U]])
-        def noDefault: F[JFieldAssembler[Schema]] =
+      extension [A, U <: JFieldDefault[A, U]] (ffd: F[JFieldDefault[A, U]])
+        def noDefault: F[JFieldAssembler[A]] =
           ffd.flatMap(fd => FD.noDefault(fd))
 
-      extension (fftb: F[JFieldTypeBuilder[Schema]])
+      extension [A] (fftb: F[JFieldTypeBuilder[A]])
         @scala.annotation.targetName("arrayBuilderFieldTypeBuilder")
-        def array: F[JArrayBuilder[JArrayDefault[Schema]]] =
+        def array: F[JArrayBuilder[JArrayDefault[A]]] =
           fftb.flatMap(ftb => FTB.array(ftb))
         @scala.annotation.targetName("booleanBuilderFieldTypeBuilder")
-        def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[Schema]]] =
+        def booleanBuilder: F[JBooleanBuilder[JBooleanDefault[A]]] =
           fftb.flatMap(ftb => FTB.booleanBuilder(ftb))
         @scala.annotation.targetName("booleanTypeFieldTypeBuilder")
-        def booleanType: F[JBooleanDefault[Schema]] =
+        def booleanType: F[JBooleanDefault[A]] =
           fftb.flatMap(ftb => FTB.booleanType(ftb))
         @scala.annotation.targetName("bytesBuilderFieldTypeBuilder")
-        def bytesBuilder: F[JBytesBuilder[JBytesDefault[Schema]]] =
+        def bytesBuilder: F[JBytesBuilder[JBytesDefault[A]]] =
           fftb.flatMap(ftb => FTB.bytesBuilder(ftb))
         @scala.annotation.targetName("bytesTypeFieldTypeBuilder")
-        def bytesType: F[JBytesDefault[Schema]] =
+        def bytesType: F[JBytesDefault[A]] =
           fftb.flatMap(ftb => FTB.bytesType(ftb))
         @scala.annotation.targetName("doubleBuilderFieldTypeBuilder")
-        def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[Schema]]] =
+        def doubleBuilder: F[JDoubleBuilder[JDoubleDefault[A]]] =
           fftb.flatMap(ftb => FTB.doubleBuilder(ftb))
         @scala.annotation.targetName("doubleTypeFieldTypeBuilder")
-        def doubleType: F[JDoubleDefault[Schema]] =
+        def doubleType: F[JDoubleDefault[A]] =
           fftb.flatMap(ftb => FTB.doubleType(ftb))
         @scala.annotation.targetName("enumerationFieldTypeBuilder")
-        def enumeration(name: String): F[JEnumBuilder[JEnumDefault[Schema]]] =
+        def enumeration(name: String): F[JEnumBuilder[JEnumDefault[A]]] =
           fftb.flatMap(ftb => FTB.enumeration(ftb)(name))
         @scala.annotation.targetName("fixedFieldTypeBuilder")
-        def fixed(name: String): F[JFixedBuilder[JFixedDefault[Schema]]] =
+        def fixed(name: String): F[JFixedBuilder[JFixedDefault[A]]] =
           fftb.flatMap(ftb => FTB.fixed(ftb)(name))
         @scala.annotation.targetName("floatBuilderFieldTypeBuilder")
-        def floatBuilder: F[JFloatBuilder[JFloatDefault[Schema]]] =
+        def floatBuilder: F[JFloatBuilder[JFloatDefault[A]]] =
           fftb.flatMap(ftb => FTB.floatBuilder(ftb))
         @scala.annotation.targetName("floatTypeFieldTypeBuilder")
-        def floatType: F[JFloatDefault[Schema]] =
+        def floatType: F[JFloatDefault[A]] =
           fftb.flatMap(ftb => FTB.floatType(ftb))
         @scala.annotation.targetName("intBuilderFieldTypeBuilder")
-        def intBuilder: F[JIntBuilder[JIntDefault[Schema]]] =
+        def intBuilder: F[JIntBuilder[JIntDefault[A]]] =
           fftb.flatMap(ftb => FTB.intBuilder(ftb))
         @scala.annotation.targetName("intTypeFieldTypeBuilder")
-        def intType: F[JIntDefault[Schema]] =
+        def intType: F[JIntDefault[A]] =
           fftb.flatMap(ftb => FTB.intType(ftb))
         @scala.annotation.targetName("longBuilderFieldTypeBuilder")
-        def longBuilder: F[JLongBuilder[JLongDefault[Schema]]] =
+        def longBuilder: F[JLongBuilder[JLongDefault[A]]] =
           fftb.flatMap(ftb => FTB.longBuilder(ftb))
         @scala.annotation.targetName("longTypeFieldTypeBuilder")
-        def longType: F[JLongDefault[Schema]] =
+        def longType: F[JLongDefault[A]] =
           fftb.flatMap(ftb => FTB.longType(ftb))
         @scala.annotation.targetName("mapFieldTypeBuilder")
-        def map: F[JMapBuilder[JMapDefault[Schema]]] =
+        def map: F[JMapBuilder[JMapDefault[A]]] =
           fftb.flatMap(ftb => FTB.map(ftb))
         @scala.annotation.targetName("nullBuilderFieldTypeBuilder")
-        def nullBuilder: F[JNullBuilder[JNullDefault[Schema]]] =
+        def nullBuilder: F[JNullBuilder[JNullDefault[A]]] =
           fftb.flatMap(ftb => FTB.nullBuilder(ftb))
         @scala.annotation.targetName("nullTypeFieldTypeBuilder")
-        def nullType: F[JNullDefault[Schema]] =
+        def nullType: F[JNullDefault[A]] =
           fftb.flatMap(ftb => FTB.nullType(ftb))
         @scala.annotation.targetName("recordFieldTypeBuilder")
-        def record(name: String): F[JRecordBuilder[JRecordDefault[Schema]]] =
+        def record(name: String): F[JRecordBuilder[JRecordDefault[A]]] =
           fftb.flatMap(ftb => FTB.record(ftb)(name))
         @scala.annotation.targetName("stringBuilderFieldTypeBuilder")
-        def stringBuilder: F[JStringBuilder[JStringDefault[Schema]]] =
+        def stringBuilder: F[JStringBuilder[JStringDefault[A]]] =
           fftb.flatMap(ftb => FTB.stringBuilder(ftb))
         @scala.annotation.targetName("stringTypeFieldTypeBuilder")
-        def stringType: F[JStringDefault[Schema]] =
+        def stringType: F[JStringDefault[A]] =
           fftb.flatMap(ftb => FTB.stringType(ftb))
 
         @scala.annotation.targetName("unionOfFieldTypeBuilder")
-        def unionOf: F[JUnionFieldTypeBuilder[Schema]] =
+        def unionOf: F[JUnionFieldTypeBuilder[A]] =
           fftb.flatMap(ftb => FTB.unionOf(ftb))
 
-      extension (ffxb: F[JFixedBuilder[Schema]])
+      extension [A] (ffxb: F[JFixedBuilder[A]])
         @scala.annotation.targetName("aliasesFixedBuilder")
-        def aliases(aliases: String*): F[JFixedBuilder[Schema]] =
+        def aliases(aliases: String*): F[JFixedBuilder[A]] =
           ffxb.flatMap(fxb => NMB.aliases(fxb)(aliases*))
         @scala.annotation.targetName("docFixedBuilder")
-        def doc(doc: String): F[JFixedBuilder[Schema]] =
+        def doc(doc: String): F[JFixedBuilder[A]] =
           ffxb.flatMap(fxb => NMB.doc(fxb)(doc))
         @scala.annotation.targetName("namespaceFixedBuilder")
-        def namespace(namespace: String): F[JFixedBuilder[Schema]] =
+        def namespace(namespace: String): F[JFixedBuilder[A]] =
           ffxb.flatMap(fxb => NSB.namespace(fxb)(namespace))
         @scala.annotation.targetName("propFixedBuilder")
-        def prop(name: String, `val`: String): F[JFixedBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JFixedBuilder[A]] =
           ffxb.flatMap(fxb => PB.prop(fxb)(name, `val`))
-        def size(size: Int): F[Schema] =
+        def size(size: Int): F[A] =
           ffxb.flatMap(fxb => FXB.size(fxb)(size))
 
-      extension (ffxd: F[JFixedDefault[Schema]])
-        def fixedDefault(defaultVal: Array[Byte]): F[JFieldAssembler[Schema]] =
+      extension [A] (ffxd: F[JFixedDefault[A]])
+        def fixedDefault(defaultVal: Array[Byte]): F[JFieldAssembler[A]] =
           ffxd.flatMap(fxd => FXD.fixedDefault(fxd)(defaultVal))
-        def fixedDefault(defaultVal: ByteBuffer): F[JFieldAssembler[Schema]] =
+        def fixedDefault(defaultVal: ByteBuffer): F[JFieldAssembler[A]] =
           ffxd.flatMap(fxd => FXD.fixedDefault(fxd)(defaultVal))
-        def fixedDefault(defaultVal: String): F[JFieldAssembler[Schema]] =
+        def fixedDefault(defaultVal: String): F[JFieldAssembler[A]] =
           ffxd.flatMap(fxd => FXD.fixedDefault(fxd)(defaultVal))
+        @scala.annotation.targetName("noDefaultFixedDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          ffxd.flatMap(fxd => FD.noDefault(fxd))
 
-      extension (fgd: F[JGenericDefault[Schema]])
+      extension [A] (fgd: F[JGenericDefault[A]])
         @scala.annotation.targetName("noDefaultGenericDefault")
-        def noDefault: F[JFieldAssembler[Schema]] =
+        def noDefault: F[JFieldAssembler[A]] =
           fgd.flatMap(gd => GD.noDefault(gd))
-        def withDefault(defaultVal: Any): F[JFieldAssembler[Schema]] =
+        def withDefault(defaultVal: Any): F[JFieldAssembler[A]] =
           fgd.flatMap(gd => GD.withDefault(gd)(defaultVal))
 
-      extension (fib: F[JIntBuilder[Schema]])
-        def endInt: F[Schema] =
+      extension [A] (fib: F[JIntBuilder[A]])
+        def endInt: F[A] =
           fib.flatMap(ib => IB.endInt(ib))
         @scala.annotation.targetName("propIntBuilder")
-        def prop(name: String, `val`: String): F[JIntBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JIntBuilder[A]] =
           fib.flatMap(ib => PB.prop(ib)(name, `val`))
 
-      extension (fid: F[JIntDefault[Schema]])
-        def intDefault(defaultVal: Int): F[JFieldAssembler[Schema]] =
+      extension [A] (fid: F[JIntDefault[A]])
+        def intDefault(defaultVal: Int): F[JFieldAssembler[A]] =
           fid.flatMap(id => ID.intDefault(id)(defaultVal))
+        @scala.annotation.targetName("noDefaultIntDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fid.flatMap(id => FD.noDefault(id))
 
-      extension (flb: F[JLongBuilder[Schema]])
-        def endLong: F[Schema] =
+      extension [A] (flb: F[JLongBuilder[A]])
+        def endLong: F[A] =
           flb.flatMap(lb => LB.endLong(lb))
         @scala.annotation.targetName("propLongBuilder")
-        def prop(name: String, `val`: String): F[JLongBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JLongBuilder[A]] =
           flb.flatMap(lb => PB.prop(lb)(name, `val`))
 
-      extension (fld: F[JLongDefault[Schema]])
-        def longDefault(defaultVal: Long): F[JFieldAssembler[Schema]] =
+      extension [A] (fld: F[JLongDefault[A]])
+        def longDefault(defaultVal: Long): F[JFieldAssembler[A]] =
           fld.flatMap(ld => LD.longDefault(ld)(defaultVal))
+        @scala.annotation.targetName("noDefaultLongDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fld.flatMap(ld => FD.noDefault(ld))
 
-      extension (fmb: F[JMapBuilder[Schema]])
-        def values: F[JTypeBuilder[Schema]] =
+      extension [A] (fmb: F[JMapBuilder[A]])
+        def values: F[JTypeBuilder[A]] =
           fmb.flatMap(mb => MB.values(mb))
-        def values(valueSchema: Schema): F[Schema] =
+        def values(valueSchema: Schema): F[A] =
           fmb.flatMap(mb => MB.values(mb)(valueSchema))
         @scala.annotation.targetName("propMapBuilder")
-        def prop(name: String, `val`: String): F[JMapBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JMapBuilder[A]] =
           fmb.flatMap(mb => PB.prop(mb)(name, `val`))
 
-      extension (fmd: F[JMapDefault[Schema]])
-        def mapDefault[V](defaultVal: Map[String, V]): F[JFieldAssembler[Schema]] =
+      extension [A] (fmd: F[JMapDefault[A]])
+        def mapDefault[V](defaultVal: Map[String, V]): F[JFieldAssembler[A]] =
           fmd.flatMap(md => MD.mapDefault(md)(defaultVal))
+        @scala.annotation.targetName("noDefaultMapDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fmd.flatMap(md => FD.noDefault(md))
 
-      extension (fnb: F[JNullBuilder[Schema]])
-        def endNull: F[Schema] =
+      extension [A] (fnb: F[JNullBuilder[A]])
+        def endNull: F[A] =
           fnb.flatMap(nb => NB.endNull(nb))
         @scala.annotation.targetName("propNullBuilder")
-        def prop(name: String, `val`: String): F[JNullBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JNullBuilder[A]] =
           fnb.flatMap(nb => PB.prop(nb)(name, `val`))
 
-      extension (fnd: F[JNullDefault[Schema]])
-        def nullDefault(): F[JFieldAssembler[Schema]] =
+      extension [A] (fnd: F[JNullDefault[A]])
+        def nullDefault(): F[JFieldAssembler[A]] =
           fnd.flatMap(nd => ND.nullDefault(nd))
+        @scala.annotation.targetName("noDefaultNullDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fnd.flatMap(nd => FD.noDefault(nd))
 
-      extension (frb: F[JRecordBuilder[Schema]])
+      extension [A] (frb: F[JRecordBuilder[A]])
         @scala.annotation.targetName("aliasesRecordBuilder")
-        def aliases(aliases: String*): F[JRecordBuilder[Schema]] =
+        def aliases(aliases: String*): F[JRecordBuilder[A]] =
           frb.flatMap(rb => NMB.aliases(rb)(aliases*))
         @scala.annotation.targetName("docRecordBuilder")
-        def doc(doc: String): F[JRecordBuilder[Schema]] =
+        def doc(doc: String): F[JRecordBuilder[A]] =
           frb.flatMap(rb => NMB.doc(rb)(doc))
-        def fields: F[JFieldAssembler[Schema]] =
+        def fields: F[JFieldAssembler[A]] =
           frb.flatMap(rb => RB.fields(rb))
         @scala.annotation.targetName("namespaceRecordBuilder")
-        def namespace(namespace: String): F[JRecordBuilder[Schema]] =
+        def namespace(namespace: String): F[JRecordBuilder[A]] =
           frb.flatMap(nrb => NSB.namespace(nrb)(namespace))
         @scala.annotation.targetName("propRecordBuilder")
-        def prop(name: String, `val`: String): F[JRecordBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JRecordBuilder[A]] =
           frb.flatMap(rb => PB.prop(rb)(name, `val`))
 
-      extension (frd: F[JRecordDefault[Schema]])
-        def recordDefault(defaultVal: GenericRecord): F[JFieldAssembler[Schema]] =
+      extension [A] (frd: F[JRecordDefault[A]])
+        def recordDefault(defaultVal: GenericRecord): F[JFieldAssembler[A]] =
           frd.flatMap(rd => RD.recordDefault(rd)(defaultVal))
+        @scala.annotation.targetName("noDefaultRecordDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          frd.flatMap(rd => FD.noDefault(rd))
 
-      extension (fsb: F[JStringBuilder[Schema]])
-        def endString: F[Schema] =
+      extension [A] (fsb: F[JStringBuilder[A]])
+        def endString: F[A] =
           fsb.flatMap(sb => SB.endString(sb))
         @scala.annotation.targetName("propStringBuilder")
-        def prop(name: String, `val`: String): F[JStringBuilder[Schema]] =
+        def prop(name: String, `val`: String): F[JStringBuilder[A]] =
           fsb.flatMap(sb => PB.prop(sb)(name, `val`))
 
-      extension (fsd: F[JStringDefault[Schema]])
-        def stringDefault(defaultVal: String): F[JFieldAssembler[Schema]] =
+      extension [A] (fsd: F[JStringDefault[A]])
+        def stringDefault(defaultVal: String): F[JFieldAssembler[A]] =
           fsd.flatMap(sd => SD.stringDefault(sd)(defaultVal))
+        @scala.annotation.targetName("noDefaultStringDefault")
+        def noDefault: F[JFieldAssembler[A]] =
+          fsd.flatMap(sd => FD.noDefault(sd))
 
-      extension (ftb: F[JTypeBuilder[Schema]])
+      extension [A] (ftb: F[JTypeBuilder[A]])
         @scala.annotation.targetName("arrayBuilderTypeBuilder")
-        def array: F[JArrayBuilder[Schema]] =
+        def array: F[JArrayBuilder[A]] =
           ftb.flatMap(tb => BAT.array(tb))
         @scala.annotation.targetName("booleanBuilderTypeBuilder")
-        def booleanBuilder: F[JBooleanBuilder[Schema]] =
+        def booleanBuilder: F[JBooleanBuilder[A]] =
           ftb.flatMap(tb => BAT.booleanBuilder(tb))
         @scala.annotation.targetName("booleanTypeTypeBuilder")
-        def booleanType: F[Schema] =
+        def booleanType: F[A] =
           ftb.flatMap(tb => BAT.booleanType(tb))
         @scala.annotation.targetName("bytesBuilderTypeBuilder")
-        def bytesBuilder: F[JBytesBuilder[Schema]] =
+        def bytesBuilder: F[JBytesBuilder[A]] =
           ftb.flatMap(tb => BAT.bytesBuilder(tb))
         @scala.annotation.targetName("bytesTypeTypeBuilder")
-        def bytesType: F[Schema] =
+        def bytesType: F[A] =
           ftb.flatMap(tb => BAT.bytesType(tb))
         @scala.annotation.targetName("doubleBuilderTypeBuilder")
-        def doubleBuilder: F[JDoubleBuilder[Schema]] =
+        def doubleBuilder: F[JDoubleBuilder[A]] =
           ftb.flatMap(tb => BAT.doubleBuilder(tb))
         @scala.annotation.targetName("doubleTypeTypeBuilder")
-        def doubleType: F[Schema] =
+        def doubleType: F[A] =
           ftb.flatMap(tb => BAT.doubleType(tb))
         @scala.annotation.targetName("enumerationTypeBuilder")
-        def enumeration(name: String): F[JEnumBuilder[Schema]] =
+        def enumeration(name: String): F[JEnumBuilder[A]] =
           ftb.flatMap(tb => BAT.enumeration(tb)(name))
         @scala.annotation.targetName("fixedTypeBuilder")
-        def fixed(name: String): F[JFixedBuilder[Schema]] =
+        def fixed(name: String): F[JFixedBuilder[A]] =
           ftb.flatMap(tb => BAT.fixed(tb)(name))
         @scala.annotation.targetName("floatBuilderTypeBuilder")
-        def floatBuilder: F[JFloatBuilder[Schema]] =
+        def floatBuilder: F[JFloatBuilder[A]] =
           ftb.flatMap(tb => BAT.floatBuilder(tb))
         @scala.annotation.targetName("floatTypeTypeBuilder")
-        def floatType: F[Schema] =
+        def floatType: F[A] =
           ftb.flatMap(tb => BAT.floatType(tb))
         @scala.annotation.targetName("intBuilderTypeBuilder")
-        def intBuilder: F[JIntBuilder[Schema]] =
+        def intBuilder: F[JIntBuilder[A]] =
           ftb.flatMap(tb => BAT.intBuilder(tb))
         @scala.annotation.targetName("intTypeTypeBuilder")
-        def intType: F[Schema] =
+        def intType: F[A] =
           ftb.flatMap(tb => BAT.intType(tb))
         @scala.annotation.targetName("longBuilderTypeBuilder")
-        def longBuilder: F[JLongBuilder[Schema]] =
+        def longBuilder: F[JLongBuilder[A]] =
           ftb.flatMap(tb => BAT.longBuilder(tb))
         @scala.annotation.targetName("longTypeTypeBuilder")
-        def longType: F[Schema] =
+        def longType: F[A] =
           ftb.flatMap(tb => BAT.longType(tb))
         @scala.annotation.targetName("mapTypeBuilder")
-        def map: F[JMapBuilder[Schema]] =
+        def map: F[JMapBuilder[A]] =
           ftb.flatMap(tb => BAT.map(tb))
         @scala.annotation.targetName("nullBuilderTypeBuilder")
-        def nullBuilder: F[JNullBuilder[Schema]] =
+        def nullBuilder: F[JNullBuilder[A]] =
           ftb.flatMap(tb => BAT.nullBuilder(tb))
         @scala.annotation.targetName("nullTypeTypeBuilder")
-        def nullType: F[Schema] =
+        def nullType: F[A] =
           ftb.flatMap(tb => BAT.nullType(tb))
         @scala.annotation.targetName("recordTypeBuilder")
-        def record(name: String): F[JRecordBuilder[Schema]] =
+        def record(name: String): F[JRecordBuilder[A]] =
           ftb.flatMap(tb => BAT.record(tb)(name))
         @scala.annotation.targetName("stringBuilderTypeBuilder")
-        def stringBuilder: F[JStringBuilder[Schema]] =
+        def stringBuilder: F[JStringBuilder[A]] =
           ftb.flatMap(tb => BAT.stringBuilder(tb))
         @scala.annotation.targetName("stringTypeTypeBuilder")
-        def stringType: F[Schema] =
+        def stringType: F[A] =
           ftb.flatMap(tb => BAT.stringType(tb))
         @scala.annotation.targetName("typeSchemaTypeBuilder")
-        def `type`(schema: Schema): F[Schema] =
+        def `type`(schema: Schema): F[A] =
           ftb.flatMap(tb => BAT.`type`(tb)(schema))
         @scala.annotation.targetName("typeNameTypeBuilder")
-        def `type`(name: String): F[Schema] =
+        def `type`(name: String): F[A] =
           ftb.flatMap(tb => BAT.`type`(tb)(name))
         @scala.annotation.targetName("typeFullNameTypeBuilder")
-        def `type`(name: String, namespace: String): F[Schema] =
+        def `type`(name: String, namespace: String): F[A] =
           ftb.flatMap(tb => BAT.`type`(tb)(name, namespace))
         @scala.annotation.targetName("unionOfTypeBuilder")
-        def unionOf: F[JBaseTypeBuilder[JUnionAccumulator[Schema]]] =
+        def unionOf: F[JBaseTypeBuilder[JUnionAccumulator[A]]] =
           ftb.flatMap(tb => TB.unionOf(tb))
 
-      extension (fua: F[JUnionAccumulator[Schema]])
-        def and: F[JBaseTypeBuilder[JUnionAccumulator[Schema]]] =
+      extension [A] (fua: F[JUnionAccumulator[A]])
+        def and: F[JBaseTypeBuilder[JUnionAccumulator[A]]] =
           fua.flatMap(ua => UA.and(ua))
-        def endUnion: F[Schema] =
+        def endUnion: F[A] =
           fua.flatMap(ua => UA.endUnion(ua))
 
-      extension (fuftb: F[JUnionFieldTypeBuilder[Schema]])
-        def array: F[JArrayBuilder[JUnionAccumulator[JArrayDefault[Schema]]]] =
+      extension [A] (fuftb: F[JUnionFieldTypeBuilder[A]])
+        def array: F[JArrayBuilder[JUnionAccumulator[JArrayDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.array(utfb))
-        def booleanBuilder: F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[Schema]]]] =
+        def booleanBuilder: F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.booleanBuilder(utfb))
-        def booleanType: F[JUnionAccumulator[JBooleanDefault[Schema]]] =
+        def booleanType: F[JUnionAccumulator[JBooleanDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.booleanType(utfb))
-        def bytesBuilder: F[JBytesBuilder[JUnionAccumulator[JBytesDefault[Schema]]]] =
+        def bytesBuilder: F[JBytesBuilder[JUnionAccumulator[JBytesDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.bytesBuilder(utfb))
-        def bytesType: F[JUnionAccumulator[JBytesDefault[Schema]]] =
+        def bytesType: F[JUnionAccumulator[JBytesDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.bytesType(utfb))
-        def doubleBuilder: F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[Schema]]]] =
+        def doubleBuilder: F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.doubleBuilder(utfb))
-        def doubleType: F[JUnionAccumulator[JDoubleDefault[Schema]]] =
+        def doubleType: F[JUnionAccumulator[JDoubleDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.doubleType(utfb))
-        def enumeration(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[Schema]]]] =
+        def enumeration(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.enumeration(utfb)(name))
-        def fixed(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[Schema]]]] =
+        def fixed(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.fixed(utfb)(name))
-        def floatBuilder: F[JFloatBuilder[JUnionAccumulator[JFloatDefault[Schema]]]] =
+        def floatBuilder: F[JFloatBuilder[JUnionAccumulator[JFloatDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.floatBuilder(utfb))
-        def floatType: F[JUnionAccumulator[JFloatDefault[Schema]]] =
+        def floatType: F[JUnionAccumulator[JFloatDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.floatType(utfb))
-        def intBuilder: F[JIntBuilder[JUnionAccumulator[JIntDefault[Schema]]]] =
+        def intBuilder: F[JIntBuilder[JUnionAccumulator[JIntDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.intBuilder(utfb))
-        def intType: F[JUnionAccumulator[JIntDefault[Schema]]] =
+        def intType: F[JUnionAccumulator[JIntDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.intType(utfb))
-        def longBuilder: F[JLongBuilder[JUnionAccumulator[JLongDefault[Schema]]]] =
+        def longBuilder: F[JLongBuilder[JUnionAccumulator[JLongDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.longBuilder(utfb))
-        def longType: F[JUnionAccumulator[JLongDefault[Schema]]] =
+        def longType: F[JUnionAccumulator[JLongDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.longType(utfb))
-        def map: F[JMapBuilder[JUnionAccumulator[JMapDefault[Schema]]]] =
+        def map: F[JMapBuilder[JUnionAccumulator[JMapDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.map(utfb))
-        def nullBuilder: F[JNullBuilder[JUnionAccumulator[JNullDefault[Schema]]]] =
+        def nullBuilder: F[JNullBuilder[JUnionAccumulator[JNullDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.nullBuilder(utfb))
-        def nullType: F[JUnionAccumulator[JNullDefault[Schema]]] =
+        def nullType: F[JUnionAccumulator[JNullDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.nullType(utfb))
-        def record(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[Schema]]]] =
+        def record(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.record(utfb)(name))
-        def stringBuilder: F[JStringBuilder[JUnionAccumulator[JStringDefault[Schema]]]] =
+        def stringBuilder: F[JStringBuilder[JUnionAccumulator[JStringDefault[A]]]] =
           fuftb.flatMap(utfb => UFTB.stringBuilder(utfb))
-        def stringType: F[JUnionAccumulator[JStringDefault[Schema]]] =
+        def stringType: F[JUnionAccumulator[JStringDefault[A]]] =
           fuftb.flatMap(utfb => UFTB.stringType(utfb))
 
-  trait ArrayBuilder[F[_], T]:
-    def items(fab: JArrayBuilder[T]): F[JTypeBuilder[T]]
-    def items(fab: JArrayBuilder[T])(itemsSchema: Schema): F[T]
+  trait ArrayBuilder[F[_]]:
+    def items[T](fab: JArrayBuilder[T]): F[JTypeBuilder[T]]
+    def items[T](fab: JArrayBuilder[T])(itemsSchema: Schema): F[T]
   object ArrayBuilder:
-    given [F[_]: Sync, T]: ArrayBuilder[F, T] =
-      new ArrayBuilder[F, T]:
-        def items(ab: JArrayBuilder[T]): F[JTypeBuilder[T]] =
+    given [F[_]: Sync]: ArrayBuilder[F] =
+      new ArrayBuilder[F]:
+        def items[T](ab: JArrayBuilder[T]): F[JTypeBuilder[T]] =
           Sync[F].delay(ab.items())
-        def items(ab: JArrayBuilder[T])(itemsSchema: Schema): F[T] =
+        def items[T](ab: JArrayBuilder[T])(itemsSchema: Schema): F[T] =
           Sync[F].delay(ab.items(itemsSchema))
 
-  trait ArrayDefault[F[_], T]:
-    def arrayDefault[V](ad: JArrayDefault[T])(defaultVal: List[V]): F[JFieldAssembler[T]]
+  trait ArrayDefault[F[_]]:
+    def arrayDefault[T,V](ad: JArrayDefault[T])(defaultVal: List[V]): F[JFieldAssembler[T]]
   object ArrayDefault:
-    given [F[_]: Sync, T]: ArrayDefault[F, T] =
-      new ArrayDefault[F, T]:
-        def arrayDefault[V](ad: JArrayDefault[T])(defaultVal: List[V]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: ArrayDefault[F] =
+      new ArrayDefault[F]:
+        def arrayDefault[T, V](ad: JArrayDefault[T])(defaultVal: List[V]): F[JFieldAssembler[T]] =
           Sync[F].delay(ad.arrayDefault(defaultVal.asJava))
 
-  trait BaseFieldTypeBuilder[F[_], T]:
-    def array(bftb: JBaseFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]]
-    def booleanBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]]
-    def booleanType(bftb: JBaseFieldTypeBuilder[T]): F[JBooleanDefault[T]]
-    def bytesBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]]
-    def bytesType(bftb: JBaseFieldTypeBuilder[T]): F[JBytesDefault[T]]
-    def doubleBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]]
-    def doubleType(bftb: JBaseFieldTypeBuilder[T]): F[JDoubleDefault[T]]
-    def enumeration(bftb: JBaseFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]]
-    def fixed(bftb: JBaseFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]]
-    def floatBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]]
-    def floatType(bftb: JBaseFieldTypeBuilder[T]): F[JFloatDefault[T]]
-    def intBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]]
-    def intType(bftb: JBaseFieldTypeBuilder[T]): F[JIntDefault[T]]
-    def longBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]]
-    def longType(bftb: JBaseFieldTypeBuilder[T]): F[JLongDefault[T]]
-    def map(bftb: JBaseFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]]
-    def nullBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]]
-    def nullType(bftb: JBaseFieldTypeBuilder[T]): F[JNullDefault[T]]
-    def record(bftb: JBaseFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]]
-    def stringBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]]
-    def stringType(bftb: JBaseFieldTypeBuilder[T]): F[JStringDefault[T]]
+  trait BaseFieldTypeBuilder[F[_]]:
+    def array[T](bftb: JBaseFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]]
+    def booleanBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]]
+    def booleanType[T](bftb: JBaseFieldTypeBuilder[T]): F[JBooleanDefault[T]]
+    def bytesBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]]
+    def bytesType[T](bftb: JBaseFieldTypeBuilder[T]): F[JBytesDefault[T]]
+    def doubleBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]]
+    def doubleType[T](bftb: JBaseFieldTypeBuilder[T]): F[JDoubleDefault[T]]
+    def enumeration[T](bftb: JBaseFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]]
+    def fixed[T](bftb: JBaseFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]]
+    def floatBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]]
+    def floatType[T](bftb: JBaseFieldTypeBuilder[T]): F[JFloatDefault[T]]
+    def intBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]]
+    def intType[T](bftb: JBaseFieldTypeBuilder[T]): F[JIntDefault[T]]
+    def longBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]]
+    def longType[T](bftb: JBaseFieldTypeBuilder[T]): F[JLongDefault[T]]
+    def map[T](bftb: JBaseFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]]
+    def nullBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]]
+    def nullType[T](bftb: JBaseFieldTypeBuilder[T]): F[JNullDefault[T]]
+    def record[T](bftb: JBaseFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]]
+    def stringBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]]
+    def stringType[T](bftb: JBaseFieldTypeBuilder[T]): F[JStringDefault[T]]
 
   object BaseFieldTypeBuilder:
-    given [F[_]: Sync, T]: BaseFieldTypeBuilder[F, T] =
-      new BaseFieldTypeBuilder[F, T]:
-        def array(bftb: JBaseFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]] =
+    given [F[_]: Sync]: BaseFieldTypeBuilder[F] =
+      new BaseFieldTypeBuilder[F]:
+        def array[T](bftb: JBaseFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]] =
           Sync[F].delay(bftb.array())
-        def booleanBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]] =
+        def booleanBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]] =
           Sync[F].delay(bftb.booleanBuilder())
-        def booleanType(bftb: JBaseFieldTypeBuilder[T]): F[JBooleanDefault[T]] =
+        def booleanType[T](bftb: JBaseFieldTypeBuilder[T]): F[JBooleanDefault[T]] =
           Sync[F].delay(bftb.booleanType())
-        def bytesBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]] =
+        def bytesBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]] =
           Sync[F].delay(bftb.bytesBuilder())
-        def bytesType(bftb: JBaseFieldTypeBuilder[T]): F[JBytesDefault[T]] =
+        def bytesType[T](bftb: JBaseFieldTypeBuilder[T]): F[JBytesDefault[T]] =
           Sync[F].delay(bftb.bytesType())
-        def doubleBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]] =
+        def doubleBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]] =
           Sync[F].delay(bftb.doubleBuilder())
-        def doubleType(bftb: JBaseFieldTypeBuilder[T]): F[JDoubleDefault[T]] =
+        def doubleType[T](bftb: JBaseFieldTypeBuilder[T]): F[JDoubleDefault[T]] =
           Sync[F].delay(bftb.doubleType())
-        def enumeration(bftb: JBaseFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]] =
+        def enumeration[T](bftb: JBaseFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]] =
           Sync[F].delay(bftb.enumeration(name))
-        def fixed(bftb: JBaseFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]] =
+        def fixed[T](bftb: JBaseFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]] =
           Sync[F].delay(bftb.fixed(name))
-        def floatBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]] =
+        def floatBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]] =
           Sync[F].delay(bftb.floatBuilder())
-        def floatType(bftb: JBaseFieldTypeBuilder[T]): F[JFloatDefault[T]] =
+        def floatType[T](bftb: JBaseFieldTypeBuilder[T]): F[JFloatDefault[T]] =
           Sync[F].delay(bftb.floatType())
-        def intBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]] =
+        def intBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]] =
           Sync[F].delay(bftb.intBuilder())
-        def intType(bftb: JBaseFieldTypeBuilder[T]): F[JIntDefault[T]] =
+        def intType[T](bftb: JBaseFieldTypeBuilder[T]): F[JIntDefault[T]] =
           Sync[F].delay(bftb.intType())
-        def longBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]] =
+        def longBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]] =
           Sync[F].delay(bftb.longBuilder())
-        def longType(bftb: JBaseFieldTypeBuilder[T]): F[JLongDefault[T]] =
+        def longType[T](bftb: JBaseFieldTypeBuilder[T]): F[JLongDefault[T]] =
           Sync[F].delay(bftb.longType())
-        def map(bftb: JBaseFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]] =
+        def map[T](bftb: JBaseFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]] =
           Sync[F].delay(bftb.map())
-        def nullBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]] =
+        def nullBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]] =
           Sync[F].delay(bftb.nullBuilder())
-        def nullType(bftb: JBaseFieldTypeBuilder[T]): F[JNullDefault[T]] =
+        def nullType[T](bftb: JBaseFieldTypeBuilder[T]): F[JNullDefault[T]] =
           Sync[F].delay(bftb.nullType())
-        def record(bftb: JBaseFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]] =
+        def record[T](bftb: JBaseFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]] =
           Sync[F].delay(bftb.record(name))
-        def stringBuilder(bftb: JBaseFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]] =
+        def stringBuilder[T](bftb: JBaseFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]] =
           Sync[F].delay(bftb.stringBuilder())
-        def stringType(bftb: JBaseFieldTypeBuilder[T]): F[JStringDefault[T]] =
+        def stringType[T](bftb: JBaseFieldTypeBuilder[T]): F[JStringDefault[T]] =
           Sync[F].delay(bftb.stringType())
 
-  trait BaseTypeBuilder[F[_], T]:
-    def array(btb: JBaseTypeBuilder[T]): F[JArrayBuilder[T]]
-    def booleanBuilder(btb: JBaseTypeBuilder[T]): F[JBooleanBuilder[T]]
-    def booleanType(btb: JBaseTypeBuilder[T]): F[T]
-    def bytesBuilder(btb: JBaseTypeBuilder[T]): F[JBytesBuilder[T]]
-    def bytesType(btb: JBaseTypeBuilder[T]): F[T]
-    def doubleBuilder(btb: JBaseTypeBuilder[T]): F[JDoubleBuilder[T]]
-    def doubleType(btb: JBaseTypeBuilder[T]): F[T]
-    def enumeration(btb: JBaseTypeBuilder[T])(name: String): F[JEnumBuilder[T]]
-    def fixed(btb: JBaseTypeBuilder[T])(name: String): F[JFixedBuilder[T]]
-    def floatBuilder(btb: JBaseTypeBuilder[T]): F[JFloatBuilder[T]]
-    def floatType(btb: JBaseTypeBuilder[T]): F[T]
-    def intBuilder(btb: JBaseTypeBuilder[T]): F[JIntBuilder[T]]
-    def intType(btb: JBaseTypeBuilder[T]): F[T]
-    def longBuilder(btb: JBaseTypeBuilder[T]): F[JLongBuilder[T]]
-    def longType(btb: JBaseTypeBuilder[T]): F[T]
-    def map(btb: JBaseTypeBuilder[T]): F[JMapBuilder[T]]
-    def nullBuilder(btb: JBaseTypeBuilder[T]): F[JNullBuilder[T]]
-    def nullType(btb: JBaseTypeBuilder[T]): F[T]
-    def record(btb: JBaseTypeBuilder[T])(name: String): F[JRecordBuilder[T]]
-    def stringBuilder(btb: JBaseTypeBuilder[T]): F[JStringBuilder[T]]
-    def stringType(btb: JBaseTypeBuilder[T]): F[T]
-    def `type`(btb: JBaseTypeBuilder[T])(schema: Schema): F[T]
-    def `type`(btb: JBaseTypeBuilder[T])(name: String): F[T]
-    def `type`(btb: JBaseTypeBuilder[T])(name: String, namespace: String): F[T]
+  trait BaseTypeBuilder[F[_]]:
+    def array[T](btb: JBaseTypeBuilder[T]): F[JArrayBuilder[T]]
+    def booleanBuilder[T](btb: JBaseTypeBuilder[T]): F[JBooleanBuilder[T]]
+    def booleanType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def bytesBuilder[T](btb: JBaseTypeBuilder[T]): F[JBytesBuilder[T]]
+    def bytesType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def doubleBuilder[T](btb: JBaseTypeBuilder[T]): F[JDoubleBuilder[T]]
+    def doubleType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def enumeration[T](btb: JBaseTypeBuilder[T])(name: String): F[JEnumBuilder[T]]
+    def fixed[T](btb: JBaseTypeBuilder[T])(name: String): F[JFixedBuilder[T]]
+    def floatBuilder[T](btb: JBaseTypeBuilder[T]): F[JFloatBuilder[T]]
+    def floatType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def intBuilder[T](btb: JBaseTypeBuilder[T]): F[JIntBuilder[T]]
+    def intType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def longBuilder[T](btb: JBaseTypeBuilder[T]): F[JLongBuilder[T]]
+    def longType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def map[T](btb: JBaseTypeBuilder[T]): F[JMapBuilder[T]]
+    def nullBuilder[T](btb: JBaseTypeBuilder[T]): F[JNullBuilder[T]]
+    def nullType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def record[T](btb: JBaseTypeBuilder[T])(name: String): F[JRecordBuilder[T]]
+    def stringBuilder[T](btb: JBaseTypeBuilder[T]): F[JStringBuilder[T]]
+    def stringType[T](btb: JBaseTypeBuilder[T]): F[T]
+    def `type`[T](btb: JBaseTypeBuilder[T])(schema: Schema): F[T]
+    def `type`[T](btb: JBaseTypeBuilder[T])(name: String): F[T]
+    def `type`[T](btb: JBaseTypeBuilder[T])(name: String, namespace: String): F[T]
 
   object BaseTypeBuilder:
-    given [F[_]: Sync, T]: BaseTypeBuilder[F, T] =
-      new BaseTypeBuilder[F, T]:
-        def array(btb: JBaseTypeBuilder[T]): F[JArrayBuilder[T]] =
+    given [F[_]: Sync]: BaseTypeBuilder[F] =
+      new BaseTypeBuilder[F]:
+        def array[T](btb: JBaseTypeBuilder[T]): F[JArrayBuilder[T]] =
           Sync[F].delay(btb.array())
-        def booleanBuilder(btb: JBaseTypeBuilder[T]): F[JBooleanBuilder[T]] =
+        def booleanBuilder[T](btb: JBaseTypeBuilder[T]): F[JBooleanBuilder[T]] =
           Sync[F].delay(btb.booleanBuilder())
-        def booleanType(btb: JBaseTypeBuilder[T]): F[T] =
+        def booleanType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.booleanType())
-        def bytesBuilder(btb: JBaseTypeBuilder[T]): F[JBytesBuilder[T]] =
+        def bytesBuilder[T](btb: JBaseTypeBuilder[T]): F[JBytesBuilder[T]] =
           Sync[F].delay(btb.bytesBuilder())
-        def bytesType(btb: JBaseTypeBuilder[T]): F[T] =
+        def bytesType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.bytesType())
-        def doubleBuilder(btb: JBaseTypeBuilder[T]): F[JDoubleBuilder[T]] =
+        def doubleBuilder[T](btb: JBaseTypeBuilder[T]): F[JDoubleBuilder[T]] =
           Sync[F].delay(btb.doubleBuilder())
-        def doubleType(btb: JBaseTypeBuilder[T]): F[T] =
+        def doubleType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.doubleType())
-        def enumeration(btb: JBaseTypeBuilder[T])(name: String): F[JEnumBuilder[T]] =
+        def enumeration[T](btb: JBaseTypeBuilder[T])(name: String): F[JEnumBuilder[T]] =
           Sync[F].delay(btb.enumeration(name))
-        def fixed(btb: JBaseTypeBuilder[T])(name: String): F[JFixedBuilder[T]] =
+        def fixed[T](btb: JBaseTypeBuilder[T])(name: String): F[JFixedBuilder[T]] =
           Sync[F].delay(btb.fixed(name))
-        def floatBuilder(btb: JBaseTypeBuilder[T]): F[JFloatBuilder[T]] =
+        def floatBuilder[T](btb: JBaseTypeBuilder[T]): F[JFloatBuilder[T]] =
           Sync[F].delay(btb.floatBuilder())
-        def floatType(btb: JBaseTypeBuilder[T]): F[T] =
+        def floatType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.floatType())
-        def intBuilder(btb: JBaseTypeBuilder[T]): F[JIntBuilder[T]] =
+        def intBuilder[T](btb: JBaseTypeBuilder[T]): F[JIntBuilder[T]] =
           Sync[F].delay(btb.intBuilder())
-        def intType(btb: JBaseTypeBuilder[T]): F[T] =
+        def intType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.intType())
-        def longBuilder(btb: JBaseTypeBuilder[T]): F[JLongBuilder[T]] =
+        def longBuilder[T](btb: JBaseTypeBuilder[T]): F[JLongBuilder[T]] =
           Sync[F].delay(btb.longBuilder())
-        def longType(btb: JBaseTypeBuilder[T]): F[T] =
+        def longType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.longType())
-        def map(btb: JBaseTypeBuilder[T]): F[JMapBuilder[T]] =
+        def map[T](btb: JBaseTypeBuilder[T]): F[JMapBuilder[T]] =
           Sync[F].delay(btb.map())
-        def nullBuilder(btb: JBaseTypeBuilder[T]): F[JNullBuilder[T]] =
+        def nullBuilder[T](btb: JBaseTypeBuilder[T]): F[JNullBuilder[T]] =
           Sync[F].delay(btb.nullBuilder())
-        def nullType(btb: JBaseTypeBuilder[T]): F[T] =
+        def nullType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.nullType())
-        def record(btb: JBaseTypeBuilder[T])(name: String): F[JRecordBuilder[T]] =
+        def record[T](btb: JBaseTypeBuilder[T])(name: String): F[JRecordBuilder[T]] =
           Sync[F].delay(btb.record(name))
-        def stringBuilder(btb: JBaseTypeBuilder[T]): F[JStringBuilder[T]] =
+        def stringBuilder[T](btb: JBaseTypeBuilder[T]): F[JStringBuilder[T]] =
           Sync[F].delay(btb.stringBuilder())
-        def stringType(btb: JBaseTypeBuilder[T]): F[T] =
+        def stringType[T](btb: JBaseTypeBuilder[T]): F[T] =
           Sync[F].delay(btb.stringType())
-        def `type`(btb: JBaseTypeBuilder[T])(schema: Schema): F[T] =
+        def `type`[T](btb: JBaseTypeBuilder[T])(schema: Schema): F[T] =
           Sync[F].delay(btb.`type`(schema))
-        def `type`(btb: JBaseTypeBuilder[T])(name: String): F[T] =
+        def `type`[T](btb: JBaseTypeBuilder[T])(name: String): F[T] =
           Sync[F].delay(btb.`type`(name))
-        def `type`(btb: JBaseTypeBuilder[T])(name: String, namespace: String): F[T] =
+        def `type`[T](btb: JBaseTypeBuilder[T])(name: String, namespace: String): F[T] =
           Sync[F].delay(btb.`type`(name, namespace))
 
-  trait BooleanBuilder[F[_], T]:
-    def endBoolean(bb: JBooleanBuilder[T]): F[T]    
+  trait BooleanBuilder[F[_]]:
+    def endBoolean[T](bb: JBooleanBuilder[T]): F[T]    
   object BooleanBuilder:
-    given [F[_]: Sync, T]: BooleanBuilder[F, T] =
-      new BooleanBuilder[F, T]:
-        def endBoolean(bb: JBooleanBuilder[T]): F[T] =
+    given [F[_]: Sync]: BooleanBuilder[F] =
+      new BooleanBuilder[F]:
+        def endBoolean[T](bb: JBooleanBuilder[T]): F[T] =
           Sync[F].delay(bb.endBoolean())
 
-  trait BooleanDefault[F[_], T]:
-    def booleanDefault(bd: JBooleanDefault[T])(defaultVal: Boolean): F[JFieldAssembler[T]]
+  trait BooleanDefault[F[_]]:
+    def booleanDefault[T](bd: JBooleanDefault[T])(defaultVal: Boolean): F[JFieldAssembler[T]]
   object BooleanDefault:
-    given [F[_]: Sync, T]: BooleanDefault[F, T] =
-      new BooleanDefault[F, T]:
-        def booleanDefault(bd: JBooleanDefault[T])(defaultVal: Boolean): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: BooleanDefault[F] =
+      new BooleanDefault[F]:
+        def booleanDefault[T](bd: JBooleanDefault[T])(defaultVal: Boolean): F[JFieldAssembler[T]] =
           Sync[F].delay(bd.booleanDefault(defaultVal))
 
-  trait BytesBuilder[F[_], T]:
-    def endBytes(bb: JBytesBuilder[T]): F[T]    
+  trait BytesBuilder[F[_]]:
+    def endBytes[T](bb: JBytesBuilder[T]): F[T]    
   object BytesBuilder:
-    given [F[_]: Sync, T]: BytesBuilder[F, T] =
-      new BytesBuilder[F, T]:
-        def endBytes(bb: JBytesBuilder[T]): F[T] =
+    given [F[_]: Sync]: BytesBuilder[F] =
+      new BytesBuilder[F]:
+        def endBytes[T](bb: JBytesBuilder[T]): F[T] =
           Sync[F].delay(bb.endBytes())
 
-  trait BytesDefault[F[_], T]:
-    def bytesDefault(bd: JBytesDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]]
-    def bytesDefault(bd: JBytesDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]]
-    def bytesDefault(bd: JBytesDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
+  trait BytesDefault[F[_]]:
+    def bytesDefault[T](bd: JBytesDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]]
+    def bytesDefault[T](bd: JBytesDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]]
+    def bytesDefault[T](bd: JBytesDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
   object BytesDefault:
-    given [F[_]: Sync, T]: BytesDefault[F, T] =
-      new BytesDefault[F, T]:
-        def bytesDefault(bd: JBytesDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: BytesDefault[F] =
+      new BytesDefault[F]:
+        def bytesDefault[T](bd: JBytesDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]] =
           Sync[F].delay(bd.bytesDefault(defaultVal))
-        def bytesDefault(bd: JBytesDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]] =
+        def bytesDefault[T](bd: JBytesDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]] =
           Sync[F].delay(bd.bytesDefault(defaultVal))
-        def bytesDefault(bd: JBytesDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
+        def bytesDefault[T](bd: JBytesDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
           Sync[F].delay(bd.bytesDefault(defaultVal))
 
-  trait DoubleBuilder[F[_], T]:
-    def endDouble(bb: JDoubleBuilder[T]): F[T]    
+  trait DoubleBuilder[F[_]]:
+    def endDouble[T](bb: JDoubleBuilder[T]): F[T]    
   object DoubleBuilder:
-    given [F[_]: Sync, T]: DoubleBuilder[F, T] =
-      new DoubleBuilder[F, T]:
-        def endDouble(bb: JDoubleBuilder[T]): F[T] =
+    given [F[_]: Sync]: DoubleBuilder[F] =
+      new DoubleBuilder[F]:
+        def endDouble[T](bb: JDoubleBuilder[T]): F[T] =
           Sync[F].delay(bb.endDouble())
 
-  trait DoubleDefault[F[_], T]:
-    def doubleDefault(bd: JDoubleDefault[T])(defaultVal: Double): F[JFieldAssembler[T]]
+  trait DoubleDefault[F[_]]:
+    def doubleDefault[T](bd: JDoubleDefault[T])(defaultVal: Double): F[JFieldAssembler[T]]
   object DoubleDefault:
-    given [F[_]: Sync, T]: DoubleDefault[F, T] =
-      new DoubleDefault[F, T]:
-        def doubleDefault(bd: JDoubleDefault[T])(defaultVal: Double): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: DoubleDefault[F] =
+      new DoubleDefault[F]:
+        def doubleDefault[T](bd: JDoubleDefault[T])(defaultVal: Double): F[JFieldAssembler[T]] =
           Sync[F].delay(bd.doubleDefault(defaultVal))
 
-  trait EnumBuilder[F[_], T]:
-    def symbols(eb: JEnumBuilder[T])(symbols: String*): F[T]    
+  trait EnumBuilder[F[_]]:
+    def symbols[T](eb: JEnumBuilder[T])(symbols: String*): F[T]    
   object EnumBuilder:
-    given [F[_]: Sync, T](using NSB: NamespacedBuilder[F, T]): EnumBuilder[F, T] =
-      new EnumBuilder[F, T]:
-        def symbols(eb: JEnumBuilder[T])(symbols: String*): F[T] =
+    given [F[_]: Sync](using NSB: NamespacedBuilder[F]): EnumBuilder[F] =
+      new EnumBuilder[F]:
+        def symbols[T](eb: JEnumBuilder[T])(symbols: String*): F[T] =
           Sync[F].delay(eb.symbols(symbols*))
 
-  trait EnumDefault[F[_], T]:
-    def enumDefault(ed: JEnumDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
+  trait EnumDefault[F[_]]:
+    def enumDefault[T](ed: JEnumDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
   object EnumDefault:
-    given [F[_]: Sync, T]: EnumDefault[F, T] =
-      new EnumDefault[F, T]:
-        def enumDefault(ed: JEnumDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: EnumDefault[F] =
+      new EnumDefault[F]:
+        def enumDefault[T](ed: JEnumDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
           Sync[F].delay(ed.enumDefault(defaultVal))
 
-  trait FieldAssembler[F[_], T]:
-    def endRecord(fa: JFieldAssembler[T]): F[T]
-    def name(fa: JFieldAssembler[T])(fieldName: String): F[JFieldBuilder[T]]
+  trait FieldAssembler[F[_]]:
+    def endRecord[T](fa: JFieldAssembler[T]): F[T]
+    def name[T](fa: JFieldAssembler[T])(fieldName: String): F[JFieldBuilder[T]]
   object FieldAssembler:
-    given [F[_]: Sync, T]: FieldAssembler[F, T] =
-      new FieldAssembler[F, T]:
-        def endRecord(fa: JFieldAssembler[T]): F[T] =
+    given [F[_]: Sync]: FieldAssembler[F] =
+      new FieldAssembler[F]:
+        def endRecord[T](fa: JFieldAssembler[T]): F[T] =
           Sync[F].delay(fa.endRecord())
-        def name(fa: JFieldAssembler[T])(fieldName: String): F[JFieldBuilder[T]] =
+        def name[T](fa: JFieldAssembler[T])(fieldName: String): F[JFieldBuilder[T]] =
           Sync[F].delay(fa.name(fieldName))
 
-  trait FieldBuilder[F[_], T]:
-    def orderAscending(fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
-    def orderDescending(fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
-    def orderIgnore(fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
-    def `type`(fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]]    
+  trait FieldBuilder[F[_]]:
+    def orderAscending[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
+    def orderDescending[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
+    def orderIgnore[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
+    def `type`[T](fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]]    
   object FieldBuilder:
-    given [F[_]: Sync, T]: FieldBuilder[F, T] =
-      new FieldBuilder[F, T]:
-        def orderAscending(fb: JFieldBuilder[T]): F[JFieldBuilder[T]] =
+    given [F[_]: Sync]: FieldBuilder[F] =
+      new FieldBuilder[F]:
+        def orderAscending[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]] =
           Sync[F].delay(fb.orderAscending())
-        def orderDescending(fb: JFieldBuilder[T]): F[JFieldBuilder[T]] =
+        def orderDescending[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]] =
           Sync[F].delay(fb.orderDescending())
-        def orderIgnore(fb: JFieldBuilder[T]): F[JFieldBuilder[T]] =
+        def orderIgnore[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]] =
           Sync[F].delay(fb.orderIgnore())
-        def `type`(fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]] =
+        def `type`[T](fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]] =
           Sync[F].delay(fb.`type`())
 
-  trait FieldDefault[F[_], T]:
-    def noDefault[U <: JFieldDefault[T, U]](fd: JFieldDefault[T, U]): F[JFieldAssembler[T]]
+  trait FieldDefault[F[_]]:
+    def noDefault[T, U <: JFieldDefault[T, U]](fd: JFieldDefault[T, U]): F[JFieldAssembler[T]]
   object FieldDefault:
-    given [F[_]: Sync, T]: FieldDefault[F, T] =
-      new FieldDefault[F, T]:
-        def noDefault[U <: JFieldDefault[T, U]](fd: JFieldDefault[T, U]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: FieldDefault[F] =
+      new FieldDefault[F]:
+        def noDefault[T, U <: JFieldDefault[T, U]](fd: JFieldDefault[T, U]): F[JFieldAssembler[T]] =
           Sync[F].delay(fd.noDefault())
 
-  trait FieldTypeBuilder[F[_], T]:
-    def array(ftb: JFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]]
-    def booleanBuilder(ftb: JFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]]
-    def booleanType(ftb: JFieldTypeBuilder[T]): F[JBooleanDefault[T]]
-    def bytesBuilder(ftb: JFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]]
-    def bytesType(ftb: JFieldTypeBuilder[T]): F[JBytesDefault[T]]
-    def doubleBuilder(ftb: JFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]]
-    def doubleType(ftb: JFieldTypeBuilder[T]): F[JDoubleDefault[T]]
-    def enumeration(ftb: JFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]]
-    def fixed(ftb: JFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]]
-    def floatBuilder(ftb: JFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]]
-    def floatType(ftb: JFieldTypeBuilder[T]): F[JFloatDefault[T]]
-    def intBuilder(ftb: JFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]]
-    def intType(ftb: JFieldTypeBuilder[T]): F[JIntDefault[T]]
-    def longBuilder(ftb: JFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]]
-    def longType(ftb: JFieldTypeBuilder[T]): F[JLongDefault[T]]
-    def map(ftb: JFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]]
-    def nullBuilder(ftb: JFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]]
-    def nullType(ftb: JFieldTypeBuilder[T]): F[JNullDefault[T]]
-    def record(ftb: JFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]]
-    def stringBuilder(ftb: JFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]]
-    def stringType(ftb: JFieldTypeBuilder[T]): F[JStringDefault[T]]
-    def unionOf(ftb: JFieldTypeBuilder[T]): F[JUnionFieldTypeBuilder[T]]
+  trait FieldTypeBuilder[F[_]]:
+    def array[T](ftb: JFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]]
+    def booleanBuilder[T](ftb: JFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]]
+    def booleanType[T](ftb: JFieldTypeBuilder[T]): F[JBooleanDefault[T]]
+    def bytesBuilder[T](ftb: JFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]]
+    def bytesType[T](ftb: JFieldTypeBuilder[T]): F[JBytesDefault[T]]
+    def doubleBuilder[T](ftb: JFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]]
+    def doubleType[T](ftb: JFieldTypeBuilder[T]): F[JDoubleDefault[T]]
+    def enumeration[T](ftb: JFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]]
+    def fixed[T](ftb: JFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]]
+    def floatBuilder[T](ftb: JFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]]
+    def floatType[T](ftb: JFieldTypeBuilder[T]): F[JFloatDefault[T]]
+    def intBuilder[T](ftb: JFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]]
+    def intType[T](ftb: JFieldTypeBuilder[T]): F[JIntDefault[T]]
+    def longBuilder[T](ftb: JFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]]
+    def longType[T](ftb: JFieldTypeBuilder[T]): F[JLongDefault[T]]
+    def map[T](ftb: JFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]]
+    def nullBuilder[T](ftb: JFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]]
+    def nullType[T](ftb: JFieldTypeBuilder[T]): F[JNullDefault[T]]
+    def record[T](ftb: JFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]]
+    def stringBuilder[T](ftb: JFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]]
+    def stringType[T](ftb: JFieldTypeBuilder[T]): F[JStringDefault[T]]
+    def unionOf[T](ftb: JFieldTypeBuilder[T]): F[JUnionFieldTypeBuilder[T]]
   object FieldTypeBuilder:
-    given [F[_]: Sync, T]: FieldTypeBuilder[F, T] =
-      new FieldTypeBuilder[F, T]:
-        def unionOf(ftb: JFieldTypeBuilder[T]): F[JUnionFieldTypeBuilder[T]] =
+    given [F[_]: Sync]: FieldTypeBuilder[F] =
+      new FieldTypeBuilder[F]:
+        def unionOf[T](ftb: JFieldTypeBuilder[T]): F[JUnionFieldTypeBuilder[T]] =
           Sync[F].delay(ftb.unionOf())
-        def array(ftb: JFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]] =
+        def array[T](ftb: JFieldTypeBuilder[T]): F[JArrayBuilder[JArrayDefault[T]]] =
           Sync[F].delay(ftb.array())
-        def booleanBuilder(ftb: JFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]] =
+        def booleanBuilder[T](ftb: JFieldTypeBuilder[T]): F[JBooleanBuilder[JBooleanDefault[T]]] =
           Sync[F].delay(ftb.booleanBuilder())
-        def booleanType(ftb: JFieldTypeBuilder[T]): F[JBooleanDefault[T]] =
+        def booleanType[T](ftb: JFieldTypeBuilder[T]): F[JBooleanDefault[T]] =
           Sync[F].delay(ftb.booleanType())
-        def bytesBuilder(ftb: JFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]] =
+        def bytesBuilder[T](ftb: JFieldTypeBuilder[T]): F[JBytesBuilder[JBytesDefault[T]]] =
           Sync[F].delay(ftb.bytesBuilder())
-        def bytesType(ftb: JFieldTypeBuilder[T]): F[JBytesDefault[T]] =
+        def bytesType[T](ftb: JFieldTypeBuilder[T]): F[JBytesDefault[T]] =
           Sync[F].delay(ftb.bytesType())
-        def doubleBuilder(ftb: JFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]] =
+        def doubleBuilder[T](ftb: JFieldTypeBuilder[T]): F[JDoubleBuilder[JDoubleDefault[T]]] =
           Sync[F].delay(ftb.doubleBuilder())
-        def doubleType(ftb: JFieldTypeBuilder[T]): F[JDoubleDefault[T]] =
+        def doubleType[T](ftb: JFieldTypeBuilder[T]): F[JDoubleDefault[T]] =
           Sync[F].delay(ftb.doubleType())
-        def enumeration(ftb: JFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]] =
+        def enumeration[T](ftb: JFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JEnumDefault[T]]] =
           Sync[F].delay(ftb.enumeration(name))
-        def fixed(ftb: JFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]] =
+        def fixed[T](ftb: JFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JFixedDefault[T]]] =
           Sync[F].delay(ftb.fixed(name))
-        def floatBuilder(ftb: JFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]] =
+        def floatBuilder[T](ftb: JFieldTypeBuilder[T]): F[JFloatBuilder[JFloatDefault[T]]] =
           Sync[F].delay(ftb.floatBuilder())
-        def floatType(ftb: JFieldTypeBuilder[T]): F[JFloatDefault[T]] =
+        def floatType[T](ftb: JFieldTypeBuilder[T]): F[JFloatDefault[T]] =
           Sync[F].delay(ftb.floatType())
-        def intBuilder(ftb: JFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]] =
+        def intBuilder[T](ftb: JFieldTypeBuilder[T]): F[JIntBuilder[JIntDefault[T]]] =
           Sync[F].delay(ftb.intBuilder())
-        def intType(ftb: JFieldTypeBuilder[T]): F[JIntDefault[T]] =
+        def intType[T](ftb: JFieldTypeBuilder[T]): F[JIntDefault[T]] =
           Sync[F].delay(ftb.intType())
-        def longBuilder(ftb: JFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]] =
+        def longBuilder[T](ftb: JFieldTypeBuilder[T]): F[JLongBuilder[JLongDefault[T]]] =
           Sync[F].delay(ftb.longBuilder())
-        def longType(ftb: JFieldTypeBuilder[T]): F[JLongDefault[T]] =
+        def longType[T](ftb: JFieldTypeBuilder[T]): F[JLongDefault[T]] =
           Sync[F].delay(ftb.longType())
-        def map(ftb: JFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]] =
+        def map[T](ftb: JFieldTypeBuilder[T]): F[JMapBuilder[JMapDefault[T]]] =
           Sync[F].delay(ftb.map())
-        def nullBuilder(ftb: JFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]] =
+        def nullBuilder[T](ftb: JFieldTypeBuilder[T]): F[JNullBuilder[JNullDefault[T]]] =
           Sync[F].delay(ftb.nullBuilder())
-        def nullType(ftb: JFieldTypeBuilder[T]): F[JNullDefault[T]] =
+        def nullType[T](ftb: JFieldTypeBuilder[T]): F[JNullDefault[T]] =
           Sync[F].delay(ftb.nullType())
-        def record(ftb: JFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]] =
+        def record[T](ftb: JFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JRecordDefault[T]]] =
           Sync[F].delay(ftb.record(name))
-        def stringBuilder(ftb: JFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]] =
+        def stringBuilder[T](ftb: JFieldTypeBuilder[T]): F[JStringBuilder[JStringDefault[T]]] =
           Sync[F].delay(ftb.stringBuilder())
-        def stringType(ftb: JFieldTypeBuilder[T]): F[JStringDefault[T]] =
+        def stringType[T](ftb: JFieldTypeBuilder[T]): F[JStringDefault[T]] =
           Sync[F].delay(ftb.stringType())
 
-  trait FixedBuilder[F[_], T]:
-    def size(fb: JFixedBuilder[T])(size: Int): F[T]
+  trait FixedBuilder[F[_]]:
+    def size[T](fb: JFixedBuilder[T])(size: Int): F[T]
   object FixedBuilder:
-    given [F[_]: Sync, T](using NSB: NamespacedBuilder[F, T]): FixedBuilder[F, T] =
-      new FixedBuilder[F, T]:
-        def size(fb: JFixedBuilder[T])(size: Int): F[T] =
+    given [F[_]: Sync](using NSB: NamespacedBuilder[F]): FixedBuilder[F] =
+      new FixedBuilder[F]:
+        def size[T](fb: JFixedBuilder[T])(size: Int): F[T] =
           Sync[F].delay(fb.size(size))
 
-  trait FixedDefault[F[_], T]:
-    def fixedDefault(gd: JFixedDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]]
-    def fixedDefault(gd: JFixedDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]]
-    def fixedDefault(gd: JFixedDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
+  trait FixedDefault[F[_]]:
+    def fixedDefault[T](gd: JFixedDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]]
+    def fixedDefault[T](gd: JFixedDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]]
+    def fixedDefault[T](gd: JFixedDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
   object FixedDefault:
-    given [F[_]: Sync, T]: FixedDefault[F, T] =
-      new FixedDefault[F, T]:
-        def fixedDefault(gd: JFixedDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: FixedDefault[F] =
+      new FixedDefault[F]:
+        def fixedDefault[T](gd: JFixedDefault[T])(defaultVal: Array[Byte]): F[JFieldAssembler[T]] =
           Sync[F].delay(gd.fixedDefault(defaultVal))
-        def fixedDefault(gd: JFixedDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]] =
+        def fixedDefault[T](gd: JFixedDefault[T])(defaultVal: ByteBuffer): F[JFieldAssembler[T]] =
           Sync[F].delay(gd.fixedDefault(defaultVal))
-        def fixedDefault(gd: JFixedDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
+        def fixedDefault[T](gd: JFixedDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
           Sync[F].delay(gd.fixedDefault(defaultVal))
 
-  trait GenericDefault[F[_], T]:
-    def noDefault(gd: JGenericDefault[T]): F[JFieldAssembler[T]]
-    def withDefault(gd: JGenericDefault[T])(defaultVal: Any): F[JFieldAssembler[T]]
+  trait GenericDefault[F[_]]:
+    def noDefault[T](gd: JGenericDefault[T]): F[JFieldAssembler[T]]
+    def withDefault[T](gd: JGenericDefault[T])(defaultVal: Any): F[JFieldAssembler[T]]
   object GenericDefault:
-    given [F[_]: Sync, T]: GenericDefault[F, T] =
-      new GenericDefault[F, T]:
-        def noDefault(gd: JGenericDefault[T]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: GenericDefault[F] =
+      new GenericDefault[F]:
+        def noDefault[T](gd: JGenericDefault[T]): F[JFieldAssembler[T]] =
           Sync[F].delay(gd.noDefault())
-        def withDefault(gd: JGenericDefault[T])(defaultVal: Any): F[JFieldAssembler[T]] =
+        def withDefault[T](gd: JGenericDefault[T])(defaultVal: Any): F[JFieldAssembler[T]] =
           Sync[F].delay(gd.withDefault(defaultVal))
 
-  trait IntBuilder[F[_], T]:
-    def endInt(ib: JIntBuilder[T]): F[T]    
+  trait IntBuilder[F[_]]:
+    def endInt[T](ib: JIntBuilder[T]): F[T]    
   object IntBuilder:
-    given [F[_]: Sync, T]: IntBuilder[F, T] =
-      new IntBuilder[F, T]:
-        def endInt(ib: JIntBuilder[T]): F[T] =
+    given [F[_]: Sync]: IntBuilder[F] =
+      new IntBuilder[F]:
+        def endInt[T](ib: JIntBuilder[T]): F[T] =
           Sync[F].delay(ib.endInt())
 
-  trait IntDefault[F[_], T]:
-    def intDefault(id: JIntDefault[T])(defaultVal: Int): F[JFieldAssembler[T]]
+  trait IntDefault[F[_]]:
+    def intDefault[T](id: JIntDefault[T])(defaultVal: Int): F[JFieldAssembler[T]]
   object IntDefault:
-    given [F[_]: Sync, T]: IntDefault[F, T] =
-      new IntDefault[F, T]:
-        def intDefault(id: JIntDefault[T])(defaultVal: Int): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: IntDefault[F] =
+      new IntDefault[F]:
+        def intDefault[T](id: JIntDefault[T])(defaultVal: Int): F[JFieldAssembler[T]] =
           Sync[F].delay(id.intDefault(defaultVal))
 
-  trait LongBuilder[F[_], T]:
-    def endLong(lb: JLongBuilder[T]): F[T]    
+  trait LongBuilder[F[_]]:
+    def endLong[T](lb: JLongBuilder[T]): F[T]    
   object LongBuilder:
-    given [F[_]: Sync, T]: LongBuilder[F, T] =
-      new LongBuilder[F, T]:
-        def endLong(lb: JLongBuilder[T]): F[T] =
+    given [F[_]: Sync]: LongBuilder[F] =
+      new LongBuilder[F]:
+        def endLong[T](lb: JLongBuilder[T]): F[T] =
           Sync[F].delay(lb.endLong())
 
-  trait LongDefault[F[_], T]:
-    def longDefault(ld: JLongDefault[T])(defaultVal: Long): F[JFieldAssembler[T]]
+  trait LongDefault[F[_]]:
+    def longDefault[T](ld: JLongDefault[T])(defaultVal: Long): F[JFieldAssembler[T]]
   object LongDefault:
-    given [F[_]: Sync, T]: LongDefault[F, T] =
-      new LongDefault[F, T]:
-        def longDefault(ld: JLongDefault[T])(defaultVal: Long): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: LongDefault[F] =
+      new LongDefault[F]:
+        def longDefault[T](ld: JLongDefault[T])(defaultVal: Long): F[JFieldAssembler[T]] =
           Sync[F].delay(ld.longDefault(defaultVal))
 
-  trait MapBuilder[F[_], T]:
-    def values(mb: JMapBuilder[T]): F[JTypeBuilder[T]]
-    def values(mb: JMapBuilder[T])(valueSchema: Schema): F[T]
+  trait MapBuilder[F[_]]:
+    def values[T](mb: JMapBuilder[T]): F[JTypeBuilder[T]]
+    def values[T](mb: JMapBuilder[T])(valueSchema: Schema): F[T]
   object MapBuilder:
-    given [F[_]: Sync, T]: MapBuilder[F, T] =
-      new MapBuilder[F, T]:
-        def values(mb: JMapBuilder[T]): F[JTypeBuilder[T]] =
+    given [F[_]: Sync]: MapBuilder[F] =
+      new MapBuilder[F]:
+        def values[T](mb: JMapBuilder[T]): F[JTypeBuilder[T]] =
           Sync[F].delay(mb.values())
-        def values(mb: JMapBuilder[T])(valueSchema: Schema): F[T] =
+        def values[T](mb: JMapBuilder[T])(valueSchema: Schema): F[T] =
           Sync[F].delay(mb.values(valueSchema))
 
-  trait MapDefault[F[_], T]:
-    def mapDefault[V](md: JMapDefault[T])(defaultVal: Map[String, V]): F[JFieldAssembler[T]]
+  trait MapDefault[F[_]]:
+    def mapDefault[T, V](md: JMapDefault[T])(defaultVal: Map[String, V]): F[JFieldAssembler[T]]
   object MapDefault:
-    given [F[_]: Sync, T]: MapDefault[F, T] =
-      new MapDefault[F, T]:
-        def mapDefault[V](md: JMapDefault[T])(defaultVal: Map[String, V]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: MapDefault[F] =
+      new MapDefault[F]:
+        def mapDefault[T, V](md: JMapDefault[T])(defaultVal: Map[String, V]): F[JFieldAssembler[T]] =
           Sync[F].delay(md.mapDefault(defaultVal.asJava))
 
-  trait NamedBuilder[F[_], T]:
-    def aliases[U <: JNamedBuilder[U]](nb: U)(aliases: String*): F[U]
-    def doc[U <: JNamedBuilder[U]](nb: U)(doc: String): F[U]
+  trait NamedBuilder[F[_]]:
+    def aliases[T, U <: JNamedBuilder[U]](nb: U)(aliases: String*): F[U]
+    def doc[T, U <: JNamedBuilder[U]](nb: U)(doc: String): F[U]
   object NamedBuilder:
-    given [F[_]: Sync, T]: NamedBuilder[F, T] =
-      new NamedBuilder[F, T]:
-        def aliases[U <: JNamedBuilder[U]](nb: U)(aliases: String*): F[U] =
+    given [F[_]: Sync]: NamedBuilder[F] =
+      new NamedBuilder[F]:
+        def aliases[T, U <: JNamedBuilder[U]](nb: U)(aliases: String*): F[U] =
           Sync[F].delay(nb.aliases(aliases*))
-        def doc[U <: JNamedBuilder[U]](nb: U)(doc: String): F[U] =
+        def doc[T, U <: JNamedBuilder[U]](nb: U)(doc: String): F[U] =
           Sync[F].delay(nb.doc(doc))
 
 
-  trait NamespacedBuilder[F[_], T]:
+  trait NamespacedBuilder[F[_]]:
     def namespace[T, U <: JNamespacedBuilder[T, U]](nb: JNamespacedBuilder[T, U])(namespace: String): F[U]
   object NamespacedBuilder:
-    given [F[_]: Sync, T]: NamespacedBuilder[F, T] =
-      new NamespacedBuilder[F, T]:
+    given [F[_]: Sync]: NamespacedBuilder[F] =
+      new NamespacedBuilder[F]:
         def namespace[T, U <: JNamespacedBuilder[T, U]](nb: JNamespacedBuilder[T, U])(namespace: String): F[U] =
           Sync[F].delay(nb.namespace(namespace))
 
-  trait NullBuilder[F[_], T]:
-    def endNull(nb: JNullBuilder[T]): F[T]    
+  trait NullBuilder[F[_]]:
+    def endNull[T](nb: JNullBuilder[T]): F[T]    
   object NullBuilder:
-    given [F[_]: Sync, T]: NullBuilder[F, T] =
-      new NullBuilder[F, T]:
-        def endNull(nb: JNullBuilder[T]): F[T] =
+    given [F[_]: Sync]: NullBuilder[F] =
+      new NullBuilder[F]:
+        def endNull[T](nb: JNullBuilder[T]): F[T] =
           Sync[F].delay(nb.endNull())
 
-  trait NullDefault[F[_], T]:
-    def nullDefault(nd: JNullDefault[T]): F[JFieldAssembler[T]]
+  trait NullDefault[F[_]]:
+    def nullDefault[T](nd: JNullDefault[T]): F[JFieldAssembler[T]]
   object NullDefault:
-    given [F[_]: Sync, T]: NullDefault[F, T] =
-      new NullDefault[F, T]:
-        def nullDefault(nd: JNullDefault[T]): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: NullDefault[F] =
+      new NullDefault[F]:
+        def nullDefault[T](nd: JNullDefault[T]): F[JFieldAssembler[T]] =
           Sync[F].delay(nd.nullDefault())
 
-  trait PropBuilder[F[_], T]:
+  trait PropBuilder[F[_]]:
     def prop[U <: JPropBuilder[U]](pb: U)(name: String, `val`: String): F[U]    
   object PropBuilder:
-    given [F[_]: Sync, T]: PropBuilder[F, T] =
-      new PropBuilder[F, T]:
+    given [F[_]: Sync]: PropBuilder[F] =
+      new PropBuilder[F]:
         def prop[U <: JPropBuilder[U]](pb: U)(name: String, `val`: String): F[U] =
           Sync[F].delay(pb.prop(name, `val`))
 
-  trait RecordBuilder[F[_], T]:
-    def fields(rb: JRecordBuilder[Schema]): F[JFieldAssembler[Schema]]
+  trait RecordBuilder[F[_]]:
+    def fields[T](rb: JRecordBuilder[T]): F[JFieldAssembler[T]]
   object RecordBuilder:
-    given [F[_]: Sync, T](using NSB: NamespacedBuilder[F, T]): RecordBuilder[F, T] =
-      new RecordBuilder[F, T]:
-        def fields(rb: JRecordBuilder[Schema]): F[JFieldAssembler[Schema]] =
+    given [F[_]: Sync](using NSB: NamespacedBuilder[F]): RecordBuilder[F] =
+      new RecordBuilder[F]:
+        def fields[T](rb: JRecordBuilder[T]): F[JFieldAssembler[T]] =
           Sync[F].delay(rb.fields())
 
-  trait RecordDefault[F[_], T]:
-    def recordDefault(rd: JRecordDefault[T])(defaultValue: GenericRecord): F[JFieldAssembler[T]]
+  trait RecordDefault[F[_]]:
+    def recordDefault[T](rd: JRecordDefault[T])(defaultValue: GenericRecord): F[JFieldAssembler[T]]
   object RecordDefault:
-    given [F[_]: Sync, T]: RecordDefault[F, T] =
-      new RecordDefault[F, T]:
-        def recordDefault(rd: JRecordDefault[T])(defaultValue: GenericRecord): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: RecordDefault[F] =
+      new RecordDefault[F]:
+        def recordDefault[T](rd: JRecordDefault[T])(defaultValue: GenericRecord): F[JFieldAssembler[T]] =
           Sync[F].delay(rd.recordDefault(defaultValue))
 
-  trait StringBuilder[F[_], T]:
-    def endString(sb: JStringBuilder[T]): F[T]    
+  trait StringBuilder[F[_]]:
+    def endString[T](sb: JStringBuilder[T]): F[T]    
   object StringBuilder:
-    given [F[_]: Sync, T]: StringBuilder[F, T] =
-      new StringBuilder[F, T]:
-        def endString(sb: JStringBuilder[T]): F[T] =
+    given [F[_]: Sync]: StringBuilder[F] =
+      new StringBuilder[F]:
+        def endString[T](sb: JStringBuilder[T]): F[T] =
           Sync[F].delay(sb.endString())
 
-  trait StringDefault[F[_], T]:
-    def stringDefault(sd: JStringDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
+  trait StringDefault[F[_]]:
+    def stringDefault[T](sd: JStringDefault[T])(defaultVal: String): F[JFieldAssembler[T]]
   object StringDefault:
-    given [F[_]: Sync, T]: StringDefault[F, T] =
-      new StringDefault[F, T]:
-        def stringDefault(sd: JStringDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
+    given [F[_]: Sync]: StringDefault[F] =
+      new StringDefault[F]:
+        def stringDefault[T](sd: JStringDefault[T])(defaultVal: String): F[JFieldAssembler[T]] =
           Sync[F].delay(sd.stringDefault(defaultVal))
           
-  trait TypeBuilder[F[_], T]:
-    def array(tb: JTypeBuilder[T]): F[JArrayBuilder[T]]
-    def booleanBuilder(tb: JTypeBuilder[T]): F[JBooleanBuilder[T]]
-    def booleanType(tb: JTypeBuilder[T]): F[T]
-    def bytesBuilder(tb: JTypeBuilder[T]): F[JBytesBuilder[T]]
-    def bytesType(tb: JTypeBuilder[T]): F[T]
-    def doubleBuilder(tb: JTypeBuilder[T]): F[JDoubleBuilder[T]]
-    def doubleType(tb: JTypeBuilder[T]): F[T]
-    def enumeration(tb: JTypeBuilder[T])(name: String): F[JEnumBuilder[T]]
-    def fixed(tb: JTypeBuilder[T])(name: String): F[JFixedBuilder[T]]
-    def floatBuilder(tb: JTypeBuilder[T]): F[JFloatBuilder[T]]
-    def floatType(tb: JTypeBuilder[T]): F[T]
-    def intBuilder(tb: JTypeBuilder[T]): F[JIntBuilder[T]]
-    def intType(tb: JTypeBuilder[T]): F[T]
-    def longBuilder(tb: JTypeBuilder[T]): F[JLongBuilder[T]]
-    def longType(tb: JTypeBuilder[T]): F[T]
-    def map(tb: JTypeBuilder[T]): F[JMapBuilder[T]]
-    def nullBuilder(tb: JTypeBuilder[T]): F[JNullBuilder[T]]
-    def nullType(tb: JTypeBuilder[T]): F[T]
-    def record(tb: JTypeBuilder[T])(name: String): F[JRecordBuilder[T]]
-    def stringBuilder(tb: JTypeBuilder[T]): F[JStringBuilder[T]]
-    def stringType(tb: JTypeBuilder[T]): F[T]
-    def `type`(tb: JTypeBuilder[T])(schema: Schema): F[T]
-    def `type`(tb: JTypeBuilder[T])(name: String): F[T]
-    def `type`(tb: JTypeBuilder[T])(name: String, namespace: String): F[T]
-    def unionOf(tb: JTypeBuilder[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]]    
+  trait TypeBuilder[F[_]]:
+    def array[T](tb: JTypeBuilder[T]): F[JArrayBuilder[T]]
+    def booleanBuilder[T](tb: JTypeBuilder[T]): F[JBooleanBuilder[T]]
+    def booleanType[T](tb: JTypeBuilder[T]): F[T]
+    def bytesBuilder[T](tb: JTypeBuilder[T]): F[JBytesBuilder[T]]
+    def bytesType[T](tb: JTypeBuilder[T]): F[T]
+    def doubleBuilder[T](tb: JTypeBuilder[T]): F[JDoubleBuilder[T]]
+    def doubleType[T](tb: JTypeBuilder[T]): F[T]
+    def enumeration[T](tb: JTypeBuilder[T])(name: String): F[JEnumBuilder[T]]
+    def fixed[T](tb: JTypeBuilder[T])(name: String): F[JFixedBuilder[T]]
+    def floatBuilder[T](tb: JTypeBuilder[T]): F[JFloatBuilder[T]]
+    def floatType[T](tb: JTypeBuilder[T]): F[T]
+    def intBuilder[T](tb: JTypeBuilder[T]): F[JIntBuilder[T]]
+    def intType[T](tb: JTypeBuilder[T]): F[T]
+    def longBuilder[T](tb: JTypeBuilder[T]): F[JLongBuilder[T]]
+    def longType[T](tb: JTypeBuilder[T]): F[T]
+    def map[T](tb: JTypeBuilder[T]): F[JMapBuilder[T]]
+    def nullBuilder[T](tb: JTypeBuilder[T]): F[JNullBuilder[T]]
+    def nullType[T](tb: JTypeBuilder[T]): F[T]
+    def record[T](tb: JTypeBuilder[T])(name: String): F[JRecordBuilder[T]]
+    def stringBuilder[T](tb: JTypeBuilder[T]): F[JStringBuilder[T]]
+    def stringType[T](tb: JTypeBuilder[T]): F[T]
+    def `type`[T](tb: JTypeBuilder[T])(schema: Schema): F[T]
+    def `type`[T](tb: JTypeBuilder[T])(name: String): F[T]
+    def `type`[T](tb: JTypeBuilder[T])(name: String, namespace: String): F[T]
+    def unionOf[T](tb: JTypeBuilder[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]]    
   object TypeBuilder:
-    given [F[_]: Sync, T]: TypeBuilder[F, T] =
-      new TypeBuilder[F, T]:
-        def array(tb: JTypeBuilder[T]): F[JArrayBuilder[T]] =
+    given [F[_]: Sync]: TypeBuilder[F] =
+      new TypeBuilder[F]:
+        def array[T](tb: JTypeBuilder[T]): F[JArrayBuilder[T]] =
           Sync[F].delay(tb.array())
-        def booleanBuilder(tb: JTypeBuilder[T]): F[JBooleanBuilder[T]] =
+        def booleanBuilder[T](tb: JTypeBuilder[T]): F[JBooleanBuilder[T]] =
           Sync[F].delay(tb.booleanBuilder())
-        def booleanType(tb: JTypeBuilder[T]): F[T] =
+        def booleanType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.booleanType())
-        def bytesBuilder(tb: JTypeBuilder[T]): F[JBytesBuilder[T]] =
+        def bytesBuilder[T](tb: JTypeBuilder[T]): F[JBytesBuilder[T]] =
           Sync[F].delay(tb.bytesBuilder())
-        def bytesType(tb: JTypeBuilder[T]): F[T] =
+        def bytesType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.bytesType())
-        def doubleBuilder(tb: JTypeBuilder[T]): F[JDoubleBuilder[T]] =
+        def doubleBuilder[T](tb: JTypeBuilder[T]): F[JDoubleBuilder[T]] =
           Sync[F].delay(tb.doubleBuilder())
-        def doubleType(tb: JTypeBuilder[T]): F[T] =
+        def doubleType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.doubleType())
-        def enumeration(tb: JTypeBuilder[T])(name: String): F[JEnumBuilder[T]] =
+        def enumeration[T](tb: JTypeBuilder[T])(name: String): F[JEnumBuilder[T]] =
           Sync[F].delay(tb.enumeration(name))
-        def fixed(tb: JTypeBuilder[T])(name: String): F[JFixedBuilder[T]] =
+        def fixed[T](tb: JTypeBuilder[T])(name: String): F[JFixedBuilder[T]] =
           Sync[F].delay(tb.fixed(name))
-        def floatBuilder(tb: JTypeBuilder[T]): F[JFloatBuilder[T]] =
+        def floatBuilder[T](tb: JTypeBuilder[T]): F[JFloatBuilder[T]] =
           Sync[F].delay(tb.floatBuilder())
-        def floatType(tb: JTypeBuilder[T]): F[T] =
+        def floatType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.floatType())
-        def intBuilder(tb: JTypeBuilder[T]): F[JIntBuilder[T]] =
+        def intBuilder[T](tb: JTypeBuilder[T]): F[JIntBuilder[T]] =
           Sync[F].delay(tb.intBuilder())
-        def intType(tb: JTypeBuilder[T]): F[T] =
+        def intType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.intType())
-        def longBuilder(tb: JTypeBuilder[T]): F[JLongBuilder[T]] =
+        def longBuilder[T](tb: JTypeBuilder[T]): F[JLongBuilder[T]] =
           Sync[F].delay(tb.longBuilder())
-        def longType(tb: JTypeBuilder[T]): F[T] =
+        def longType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.longType())
-        def map(tb: JTypeBuilder[T]): F[JMapBuilder[T]] =
+        def map[T](tb: JTypeBuilder[T]): F[JMapBuilder[T]] =
           Sync[F].delay(tb.map())
-        def nullBuilder(tb: JTypeBuilder[T]): F[JNullBuilder[T]] =
+        def nullBuilder[T](tb: JTypeBuilder[T]): F[JNullBuilder[T]] =
           Sync[F].delay(tb.nullBuilder())
-        def nullType(tb: JTypeBuilder[T]): F[T] =
+        def nullType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.nullType())
-        def record(tb: JTypeBuilder[T])(name: String): F[JRecordBuilder[T]] =
+        def record[T](tb: JTypeBuilder[T])(name: String): F[JRecordBuilder[T]] =
           Sync[F].delay(tb.record(name))
-        def stringBuilder(tb: JTypeBuilder[T]): F[JStringBuilder[T]] =
+        def stringBuilder[T](tb: JTypeBuilder[T]): F[JStringBuilder[T]] =
           Sync[F].delay(tb.stringBuilder())
-        def stringType(tb: JTypeBuilder[T]): F[T] =
+        def stringType[T](tb: JTypeBuilder[T]): F[T] =
           Sync[F].delay(tb.stringType())
-        def `type`(tb: JTypeBuilder[T])(schema: Schema): F[T] =
+        def `type`[T](tb: JTypeBuilder[T])(schema: Schema): F[T] =
           Sync[F].delay(tb.`type`(schema))
-        def `type`(tb: JTypeBuilder[T])(name: String): F[T] =
+        def `type`[T](tb: JTypeBuilder[T])(name: String): F[T] =
           Sync[F].delay(tb.`type`(name))
-        def `type`(tb: JTypeBuilder[T])(name: String, namespace: String): F[T] =
+        def `type`[T](tb: JTypeBuilder[T])(name: String, namespace: String): F[T] =
           Sync[F].delay(tb.`type`(name, namespace))
-        def unionOf(tb: JTypeBuilder[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]] =
+        def unionOf[T](tb: JTypeBuilder[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]] =
           Sync[F].delay(tb.unionOf())
 
-  trait UnionAccumulator[F[_], T]:
-    def and(ua: JUnionAccumulator[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]]
-    def endUnion(ua: JUnionAccumulator[T]): F[T]    
+  trait UnionAccumulator[F[_]]:
+    def and[T](ua: JUnionAccumulator[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]]
+    def endUnion[T](ua: JUnionAccumulator[T]): F[T]    
   object UnionAccumulator:
-    given [F[_]: Sync, T]: UnionAccumulator[F, T] =
-      new UnionAccumulator[F, T]:
-        def and(ua: JUnionAccumulator[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]] =
+    given [F[_]: Sync]: UnionAccumulator[F] =
+      new UnionAccumulator[F]:
+        def and[T](ua: JUnionAccumulator[T]): F[JBaseTypeBuilder[JUnionAccumulator[T]]] =
           Sync[F].delay(ua.and())
-        def endUnion(ua: JUnionAccumulator[T]): F[T] =
+        def endUnion[T](ua: JUnionAccumulator[T]): F[T] =
           Sync[F].delay(ua.endUnion())
 
-  trait UnionFieldTypeBuilder[F[_], T]:
-    def array(uftb: JUnionFieldTypeBuilder[T]): F[JArrayBuilder[JUnionAccumulator[JArrayDefault[T]]]]
-    def booleanBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[T]]]]
-    def booleanType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBooleanDefault[T]]]
-    def bytesBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JBytesBuilder[JUnionAccumulator[JBytesDefault[T]]]]
-    def bytesType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBytesDefault[T]]]
-    def doubleBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[T]]]]
-    def doubleType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JDoubleDefault[T]]]
-    def enumeration(uftb: JUnionFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[T]]]]
-    def fixed(uftb: JUnionFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[T]]]]
-    def floatBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JFloatBuilder[JUnionAccumulator[JFloatDefault[T]]]]
-    def floatType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JFloatDefault[T]]]
-    def intBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JIntBuilder[JUnionAccumulator[JIntDefault[T]]]]
-    def intType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JIntDefault[T]]]
-    def longBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JLongBuilder[JUnionAccumulator[JLongDefault[T]]]]
-    def longType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JLongDefault[T]]]
-    def map(uftb: JUnionFieldTypeBuilder[T]): F[JMapBuilder[JUnionAccumulator[JMapDefault[T]]]]
-    def nullBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JNullBuilder[JUnionAccumulator[JNullDefault[T]]]]
-    def nullType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JNullDefault[T]]]
-    def record(uftb: JUnionFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[T]]]]
-    def stringBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JStringBuilder[JUnionAccumulator[JStringDefault[T]]]]
-    def stringType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JStringDefault[T]]]
+  trait UnionFieldTypeBuilder[F[_]]:
+    def array[T](uftb: JUnionFieldTypeBuilder[T]): F[JArrayBuilder[JUnionAccumulator[JArrayDefault[T]]]]
+    def booleanBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[T]]]]
+    def booleanType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBooleanDefault[T]]]
+    def bytesBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JBytesBuilder[JUnionAccumulator[JBytesDefault[T]]]]
+    def bytesType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBytesDefault[T]]]
+    def doubleBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[T]]]]
+    def doubleType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JDoubleDefault[T]]]
+    def enumeration[T](uftb: JUnionFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[T]]]]
+    def fixed[T](uftb: JUnionFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[T]]]]
+    def floatBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JFloatBuilder[JUnionAccumulator[JFloatDefault[T]]]]
+    def floatType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JFloatDefault[T]]]
+    def intBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JIntBuilder[JUnionAccumulator[JIntDefault[T]]]]
+    def intType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JIntDefault[T]]]
+    def longBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JLongBuilder[JUnionAccumulator[JLongDefault[T]]]]
+    def longType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JLongDefault[T]]]
+    def map[T](uftb: JUnionFieldTypeBuilder[T]): F[JMapBuilder[JUnionAccumulator[JMapDefault[T]]]]
+    def nullBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JNullBuilder[JUnionAccumulator[JNullDefault[T]]]]
+    def nullType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JNullDefault[T]]]
+    def record[T](uftb: JUnionFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[T]]]]
+    def stringBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JStringBuilder[JUnionAccumulator[JStringDefault[T]]]]
+    def stringType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JStringDefault[T]]]
 
   object UnionFieldTypeBuilder:
-    given [F[_]: Sync, T]: UnionFieldTypeBuilder[F, T] =
-      new UnionFieldTypeBuilder[F, T]:
-        def array(uftb: JUnionFieldTypeBuilder[T]): F[JArrayBuilder[JUnionAccumulator[JArrayDefault[T]]]] =
+    given [F[_]: Sync]: UnionFieldTypeBuilder[F] =
+      new UnionFieldTypeBuilder[F]:
+        def array[T](uftb: JUnionFieldTypeBuilder[T]): F[JArrayBuilder[JUnionAccumulator[JArrayDefault[T]]]] =
           Sync[F].delay(uftb.array())
-        def booleanBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[T]]]] =
+        def booleanBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JBooleanBuilder[JUnionAccumulator[JBooleanDefault[T]]]] =
           Sync[F].delay(uftb.booleanBuilder())
-        def booleanType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBooleanDefault[T]]] =
+        def booleanType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBooleanDefault[T]]] =
           Sync[F].delay(uftb.booleanType())
-        def bytesBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JBytesBuilder[JUnionAccumulator[JBytesDefault[T]]]] =
+        def bytesBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JBytesBuilder[JUnionAccumulator[JBytesDefault[T]]]] =
           Sync[F].delay(uftb.bytesBuilder())
-        def bytesType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBytesDefault[T]]] =
+        def bytesType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JBytesDefault[T]]] =
           Sync[F].delay(uftb.bytesType())
-        def doubleBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[T]]]] =
+        def doubleBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JDoubleBuilder[JUnionAccumulator[JDoubleDefault[T]]]] =
           Sync[F].delay(uftb.doubleBuilder())
-        def doubleType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JDoubleDefault[T]]] =
+        def doubleType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JDoubleDefault[T]]] =
           Sync[F].delay(uftb.doubleType())
-        def enumeration(uftb: JUnionFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[T]]]] =
+        def enumeration[T](uftb: JUnionFieldTypeBuilder[T])(name: String): F[JEnumBuilder[JUnionAccumulator[JEnumDefault[T]]]] =
           Sync[F].delay(uftb.enumeration(name))
-        def fixed(uftb: JUnionFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[T]]]] =
+        def fixed[T](uftb: JUnionFieldTypeBuilder[T])(name: String): F[JFixedBuilder[JUnionAccumulator[JFixedDefault[T]]]] =
           Sync[F].delay(uftb.fixed(name))
-        def floatBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JFloatBuilder[JUnionAccumulator[JFloatDefault[T]]]] =
+        def floatBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JFloatBuilder[JUnionAccumulator[JFloatDefault[T]]]] =
           Sync[F].delay(uftb.floatBuilder())
-        def floatType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JFloatDefault[T]]] =
+        def floatType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JFloatDefault[T]]] =
           Sync[F].delay(uftb.floatType())
-        def intBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JIntBuilder[JUnionAccumulator[JIntDefault[T]]]] =
+        def intBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JIntBuilder[JUnionAccumulator[JIntDefault[T]]]] =
           Sync[F].delay(uftb.intBuilder())
-        def intType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JIntDefault[T]]] =
+        def intType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JIntDefault[T]]] =
           Sync[F].delay(uftb.intType())
-        def longBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JLongBuilder[JUnionAccumulator[JLongDefault[T]]]] =
+        def longBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JLongBuilder[JUnionAccumulator[JLongDefault[T]]]] =
           Sync[F].delay(uftb.longBuilder())
-        def longType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JLongDefault[T]]] =
+        def longType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JLongDefault[T]]] =
           Sync[F].delay(uftb.longType())
-        def map(uftb: JUnionFieldTypeBuilder[T]): F[JMapBuilder[JUnionAccumulator[JMapDefault[T]]]] =
+        def map[T](uftb: JUnionFieldTypeBuilder[T]): F[JMapBuilder[JUnionAccumulator[JMapDefault[T]]]] =
           Sync[F].delay(uftb.map())
-        def nullBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JNullBuilder[JUnionAccumulator[JNullDefault[T]]]] =
+        def nullBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JNullBuilder[JUnionAccumulator[JNullDefault[T]]]] =
           Sync[F].delay(uftb.nullBuilder())
-        def nullType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JNullDefault[T]]] =
+        def nullType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JNullDefault[T]]] =
           Sync[F].delay(uftb.nullType())
-        def record(uftb: JUnionFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[T]]]] =
+        def record[T](uftb: JUnionFieldTypeBuilder[T])(name: String): F[JRecordBuilder[JUnionAccumulator[JRecordDefault[T]]]] =
           Sync[F].delay(uftb.record(name))
-        def stringBuilder(uftb: JUnionFieldTypeBuilder[T]): F[JStringBuilder[JUnionAccumulator[JStringDefault[T]]]] =
+        def stringBuilder[T](uftb: JUnionFieldTypeBuilder[T]): F[JStringBuilder[JUnionAccumulator[JStringDefault[T]]]] =
           Sync[F].delay(uftb.stringBuilder())
-        def stringType(uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JStringDefault[T]]] =
+        def stringType[T](uftb: JUnionFieldTypeBuilder[T]): F[JUnionAccumulator[JStringDefault[T]]] =
           Sync[F].delay(uftb.stringType())
