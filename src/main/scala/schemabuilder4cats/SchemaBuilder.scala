@@ -215,6 +215,12 @@ trait SchemaBuilder[F[_]]:
     def prop(name: String, `val`: String): F[JFieldBuilder[A]]
     @scala.annotation.targetName("typeFieldBuilder")
     def `type`: F[JFieldTypeBuilder[A]]
+    @scala.annotation.targetName("typeSchemaFieldBuilder")
+    def `type`(schema: Schema): F[JGenericDefault[A]]
+    @scala.annotation.targetName("typeNameFieldBuilder")
+    def `type`(name: String): F[JGenericDefault[A]]
+    @scala.annotation.targetName("typeFullNameFieldBuilder")
+    def `type`(name: String, namespace: String): F[JGenericDefault[A]]
   extension [A] (fftb: F[JFieldTypeBuilder[A]])
     @scala.annotation.targetName("arrayBuilderFieldTypeBuilder")
     def array: F[JArrayBuilder[JArrayDefault[A]]]
@@ -725,6 +731,15 @@ object SchemaBuilder:
         @scala.annotation.targetName("typeFieldBuilder")
         def `type`: F[JFieldTypeBuilder[A]] =
           ffb.flatMap(fb => FB.`type`(fb))
+        @scala.annotation.targetName("typeSchemaFieldBuilder")
+        def `type`(schema: Schema): F[JGenericDefault[A]] =
+          ffb.flatMap(fb => FB.`type`(fb)(schema))
+        @scala.annotation.targetName("typeNameFieldBuilder")
+        def `type`(name: String): F[JGenericDefault[A]] =
+          ffb.flatMap(fb => FB.`type`(fb)(name))
+        @scala.annotation.targetName("typeFullNameFieldBuilder")
+        def `type`(name: String, namespace: String): F[JGenericDefault[A]] =
+          ffb.flatMap(fb => FB.`type`(fb)(name, namespace))
 
       extension [A, U <: JFieldDefault[A, U]] (ffd: F[JFieldDefault[A, U]])
         def noDefault: F[JFieldAssembler[A]] =
@@ -1306,7 +1321,11 @@ object SchemaBuilder:
     def orderAscending[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
     def orderDescending[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
     def orderIgnore[T](fb: JFieldBuilder[T]): F[JFieldBuilder[T]]    
-    def `type`[T](fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]]    
+    def `type`[T](fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]]
+    def `type`[T](fb: JFieldBuilder[T])(schema: Schema): F[JGenericDefault[T]]
+    def `type`[T](fb: JFieldBuilder[T])(name: String): F[JGenericDefault[T]]
+    def `type`[T](fb: JFieldBuilder[T])(name: String, namespace: String): F[JGenericDefault[T]]
+     
   object FieldBuilder:
     given [F[_]: Sync]: FieldBuilder[F] =
       new FieldBuilder[F]:
@@ -1318,6 +1337,12 @@ object SchemaBuilder:
           Sync[F].delay(fb.orderIgnore())
         def `type`[T](fb: JFieldBuilder[T]): F[JFieldTypeBuilder[T]] =
           Sync[F].delay(fb.`type`())
+        def `type`[T](fb: JFieldBuilder[T])(schema: Schema): F[JGenericDefault[T]] =
+          Sync[F].delay(fb.`type`(schema))
+        def `type`[T](fb: JFieldBuilder[T])(name: String): F[JGenericDefault[T]] =
+          Sync[F].delay(fb.`type`(name))
+        def `type`[T](fb: JFieldBuilder[T])(name: String, namespace: String): F[JGenericDefault[T]] =
+          Sync[F].delay(fb.`type`(name, namespace))
 
   trait FieldDefault[F[_]]:
     def noDefault[T, U <: JFieldDefault[T, U]](fd: JFieldDefault[T, U]): F[JFieldAssembler[T]]
