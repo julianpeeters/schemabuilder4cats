@@ -1,6 +1,6 @@
 # schemabuilder4cats
- - **Library for Scala 3.3.0 (JVM only)**
- - **Depends on Avro 1.11.1**
+ - **Library for Scala 3 (JVM only)**
+ - **Depends on Avro 1.11.3**
 
 ### Installation
 
@@ -9,14 +9,14 @@ Build schemas secure in the knowledge that we won't be causing side-effects.
 ##### Add the dependency
 
 ```
-"com.julianpeeters" %% "schemabuilder4cats" % "0.1.2"
+"com.julianpeeters" %% "schemabuilder4cats" % "0.1.3"
 ```
 
 ### Usage
 
-The `SchemaBuilder` API is modelled after Apache Avro Java 1.11.1 API.
+The `SchemaBuilder` API is modelled after Apache Avro Java 1.11.3 API.
 Please see the corresponding `org.apache.avro.SchemaBuilder`
-[Javadoc](https://avro.apache.org/docs/1.11.1/api/java/) for documentation.
+[Javadoc](https://avro.apache.org/docs/1.11.3/api/java/) for documentation.
 
 ##### Example:
 
