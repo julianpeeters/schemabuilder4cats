@@ -1,6 +1,6 @@
-lazy val ApacheAvroV = "1.11.1"
+lazy val ApacheAvroV = "1.11.3"
 lazy val CatsEffectV = "3.5.1"
-lazy val MUnitCEV = "1.0.7"
+lazy val MUnitCEV = "2.0.0-M3"
 
 inThisBuild(List(
   crossScalaVersions := Seq(scalaVersion.value),
@@ -24,7 +24,7 @@ inThisBuild(List(
     "-Wunused:all",
     "-Wvalue-discard"
   ),
-  scalaVersion := "3.3.0",
+  scalaVersion := "3.3.1",
   versionScheme := Some("semver-spec"),
 ))
 
@@ -33,10 +33,10 @@ lazy val schemabuilder4cats = (project in file("."))
     name := "schemabuilder4cats",
     libraryDependencies ++= Seq(
       // main
-      "org.apache.avro" % "avro" % ApacheAvroV,
-      "org.typelevel" %% "cats-effect" % CatsEffectV,
+      "org.apache.avro" %  "avro"        % ApacheAvroV,
+      "org.typelevel"   %% "cats-effect" % CatsEffectV,
       // test
-      "org.typelevel" %% "munit-cats-effect-3" % MUnitCEV % Test,
+      "org.typelevel" %% "munit-cats-effect" % MUnitCEV % Test,
     )
   )
 
@@ -45,7 +45,7 @@ lazy val docs = project.in(file("docs/gitignored"))
     mdocOut := schemabuilder4cats.base,
     mdocVariables := Map(
       "AVRO" -> ApacheAvroV,
-      "SCALA" -> crossScalaVersions.value.mkString(", "),
+      "SCALA" -> crossScalaVersions.value.map(e => e.takeWhile(_ != '.')).mkString(", "),
       "VERSION" -> version.value.takeWhile(_ != '+'),
     )
   )
